@@ -1,0 +1,604 @@
+
+@article{chen_miles:_2006,
+	title = {{MILES}: Multiple-Instance Learning via Embedded Instance Selection},
+	volume = {28},
+	issn = {0162-8828},
+	doi = {10.1109/TPAMI.2006.248},
+	shorttitle = {{MILES}},
+	abstract = {Multiple-instance problems arise from the situations where training class labels are attached to sets of samples (named bags), instead of individual samples within each bag (called instances). Most previous multiple-instance learning ({MIL}) algorithms are developed based on the assumption that a bag is positive if and only if at least one of its instances is positive. Although the assumption works well in a drug activity prediction problem, it is rather restrictive for other applications, especially those in the computer vision area. We propose a learning method, {MILES} (multiple-instance learning via embedded instance selection), which converts the multiple-instance learning problem to a standard supervised learning problem that does not impose the assumption relating instance labels to bag labels. {MILES} maps each bag into a feature space defined by the instances in the training bags via an instance similarity measure. This feature mapping often provides a large number of redundant or irrelevant features. Hence, 1-norm {SVM} is applied to select important features as well as construct classifiers simultaneously. We have performed extensive experiments. In comparison with other methods, {MILES} demonstrates competitive classification accuracy, high computation efficiency, and robustness to labeling uncertainty},
+	pages = {1931--1947},
+	number = {12},
+	journaltitle = {{IEEE} Transactions on Pattern Analysis and Machine Intelligence},
+	author = {Chen, Yixin and Bi, Jinbo and Wang, J. Z.},
+	date = {2006-12},
+	keywords = {1-norm support vector machine, Algorithms, Application software, Artificial Intelligence, classification accuracy, computer vision, drug activity prediction, drug activity prediction., Drugs, embedded instance selection, feature extraction, feature mapping, feature subset selection, image categorization, Image Enhancement, Image Interpretation, Computer-Assisted, Imaging, Three-Dimensional, Information Storage and Retrieval, Labeling, labeling uncertainty, learning (artificial intelligence), Learning systems, {MILES}, Multiple-instance learning, multiple-instance learning algorithms, object recognition, pattern classification, Reproducibility of Results, Robustness, Sensitivity and Specificity, supervised learning, support vector machine, Support vector machine classification, support vector machines, Uncertainty}
+}
+
+@thesis{foulds_learning_2008,
+	title = {Learning Instance Weights in Multi-Instance Learning},
+	url = {http://researchcommons.waikato.ac.nz/handle/10289/2460},
+	abstract = {Multi-instance ({MI}) learning is a variant of supervised machine learning, where each learning example contains a bag of instances instead of just a single feature vector. {MI} learning has applications in areas such as drug activity prediction, fruit disease management and image classification.
+
+This thesis investigates the case where each instance has a weight value determining the level of influence that it has on its bag's class label. This is a more general assumption than most existing approaches use, and thus is more widely applicable. The challenge is to accurately estimate these weights in order to make predictions at the bag level.
+
+An existing approach known as {MILES} is retroactively identified as an algorithm that uses instance weights for {MI} learning, and is evaluated using a variety of base learners on benchmark problems. New algorithms for learning instance weights for {MI} learning are also proposed and rigorously evaluated on both artificial and real-world datasets. The new algorithms are shown to achieve better root mean squared error rates than existing approaches on artificial data generated according to the algorithms' underlying assumptions. Experimental results also demonstrate that the new algorithms are competitive with existing approaches on real-world problems.},
+	institution = {The University of Waikato},
+	type = {Thesis},
+	author = {Foulds, James Richard},
+	urldate = {2017-07-06},
+	date = {2008},
+	langid = {english}
+}
+
+@article{dempster_maximum_1977,
+	title = {Maximum Likelihood from Incomplete Data via the {EM} Algorithm},
+	volume = {39},
+	issn = {0035-9246},
+	url = {http://www.jstor.org/stable/2984875},
+	abstract = {A broadly applicable algorithm for computing maximum likelihood estimates from incomplete data is presented at various levels of generality. Theory showing the monotone behaviour of the likelihood and convergence of the algorithm is derived. Many examples are sketched, including missing value situations, applications to grouped, censored or truncated data, finite mixture models, variance component estimation, hyperparameter estimation, iteratively reweighted least squares and factor analysis.},
+	pages = {1--38},
+	number = {1},
+	journaltitle = {Journal of the Royal Statistical Society. Series B (Methodological)},
+	author = {Dempster, A. P. and Laird, N. M. and Rubin, D. B.},
+	urldate = {2017-07-01},
+	date = {1977}
+}
+
+@inproceedings{wang_solving_2000,
+	location = {Stanford University, Stanford, {CA}, {USA}},
+	title = {Solving Multiple-Instance Problem: A Lazy Learning Approach},
+	url = {http://cogprints.org/2124/},
+	shorttitle = {Solving Multiple-Instance Problem},
+	abstract = {As opposed to traditional supervised learning, multiple-instance learning 
+    concerns the problem of classifying a bag of instances, given bags that are 
+    labeled by a teacher as being overall positive or negative. Current research 
+    mainly concentrates on adapting traditional concept learning to solve this 
+    problem. In this paper we investigate the use of lazy learning and Hausdorff 
+    distance to approach the multiple-instance problem. We present two variants of 
+    the K-nearest neighbor algorithm, called Bayesian-{KNN} and Citation-{KNN}, solving 
+    the multiple-instance problem. Experiments on the Drug discovery benchmark data 
+    show that both algorithms are competitive with the best ones conceived in the 
+    concept learning framework. Further work includes exploring of a combination of 
+    lazy and eager multiple-instance problem classifiers.},
+	eventtitle = {Seventeenth International Conference on Machine Learning},
+	pages = {1119--1125},
+	booktitle = {Proceedings of the Seventeenth International Conference on Machine Learning},
+	publisher = {Morgan Kaufmann},
+	author = {Wang, Jun and Zucker, Jean-Daniel},
+	editor = {Langley, Pat},
+	urldate = {2017-07-01},
+	date = {2000}
+}
+
+@inproceedings{zhou_multi-instance_2009,
+	location = {New York, {NY}, {USA}},
+	title = {Multi-instance Learning by Treating Instances As non-I.I.D. Samples},
+	isbn = {978-1-60558-516-1},
+	url = {http://doi.acm.org/10.1145/1553374.1553534},
+	doi = {10.1145/1553374.1553534},
+	series = {{ICML} '09},
+	abstract = {Previous studies on multi-instance learning typically treated instances in the bags as independently and identically distributed. The instances in a bag, however, are rarely independent in real tasks, and a better performance can be expected if the instances are treated in an non-i.i.d. way that exploits relations among instances. In this paper, we propose two simple yet effective methods. In the first method, we explicitly map every bag to an undirected graph and design a graph kernel for distinguishing the positive and negative bags. In the second method, we implicitly construct graphs by deriving affinity matrices and propose an efficient graph kernel considering the clique information. The effectiveness of the proposed methods are validated by experiments.},
+	pages = {1249--1256},
+	booktitle = {Proceedings of the 26th Annual International Conference on Machine Learning},
+	publisher = {{ACM}},
+	author = {Zhou, Zhi-Hua and Sun, Yu-Yin and Li, Yu-Feng},
+	urldate = {2017-07-06},
+	date = {2009}
+}
+
+@article{zhang_multi-instance_2009,
+	title = {Multi-instance clustering with applications to multi-instance prediction},
+	volume = {31},
+	issn = {0924-669X, 1573-7497},
+	url = {https://link.springer.com/article/10.1007/s10489-007-0111-x},
+	doi = {10.1007/s10489-007-0111-x},
+	abstract = {In the setting of multi-instance learning, each object is represented by a bag composed of multiple instances instead of by a single instance in a traditional learning setting. Previous works in this area only concern multi-instance prediction problems where each bag is associated with a binary (classification) or real-valued (regression) label. However, unsupervised multi-instance learning where bags are without labels has not been studied. In this paper, the problem of unsupervised multi-instance learning is addressed where a multi-instance clustering algorithm named Bamic is proposed. Briefly, by regarding bags as atomic data items and using some form of distance metric to measure distances between bags, Bamic adapts the popular k-Medoids algorithm to partition the unlabeled training bags into k disjoint groups of bags. Furthermore, based on the clustering results, a novel multi-instance prediction algorithm named Bartmip is developed. Firstly, each bag is re-represented by a k-dimensional feature vector, where the value of the i-th feature is set to be the distance between the bag and the medoid of the i-th group. After that, bags are transformed into feature vectors so that common supervised learners are used to learn from the transformed feature vectors each associated with the original bag’s label. Extensive experiments show that Bamic could effectively discover the underlying structure of the data set and Bartmip works quite well on various kinds of multi-instance prediction problems.},
+	pages = {47--68},
+	number = {1},
+	journaltitle = {Applied Intelligence},
+	shortjournal = {Appl Intell},
+	author = {Zhang, Min-Ling and Zhou, Zhi-Hua},
+	urldate = {2017-07-06},
+	date = {2009-08-01},
+	langid = {english}
+}
+
+@article{chen_image_2004,
+	title = {Image Categorization by Learning and Reasoning with Regions},
+	volume = {5},
+	issn = {{ISSN} 1533-7928},
+	url = {http://www.jmlr.org/papers/v5/chen04a.html},
+	pages = {913--939},
+	issue = {Aug},
+	journaltitle = {Journal of Machine Learning Research},
+	author = {Chen, Yixin and Wang, James Z.},
+	urldate = {2017-07-06},
+	date = {2004}
+}
+
+@article{cheplygina_multiple_2015,
+	title = {Multiple instance learning with bag dissimilarities},
+	volume = {48},
+	issn = {0031-3203},
+	url = {http://www.sciencedirect.com/science/article/pii/S0031320314002817},
+	doi = {10.1016/j.patcog.2014.07.022},
+	abstract = {Multiple instance learning ({MIL}) is concerned with learning from sets (bags) of objects (instances), where the individual instance labels are ambiguous. In this setting, supervised learning cannot be applied directly. Often, specialized {MIL} methods learn by making additional assumptions about the relationship of the bag labels and instance labels. Such assumptions may fit a particular dataset, but do not generalize to the whole range of {MIL} problems. Other {MIL} methods shift the focus of assumptions from the labels to the overall (dis)similarity of bags, and therefore learn from bags directly. We propose to represent each bag by a vector of its dissimilarities to other bags in the training set, and treat these dissimilarities as a feature representation. We show several alternatives to define a dissimilarity between bags and discuss which definitions are more suitable for particular {MIL} problems. The experimental results show that the proposed approach is computationally inexpensive, yet very competitive with state-of-the-art algorithms on a wide range of {MIL} datasets.},
+	pages = {264--275},
+	number = {1},
+	journaltitle = {Pattern Recognition},
+	shortjournal = {Pattern Recognition},
+	author = {Cheplygina, Veronika and Tax, David M. J. and Loog, Marco},
+	urldate = {2017-07-04},
+	date = {2015-01-01},
+	keywords = {Dissimilarity representation, drug activity prediction, Image classification, Multiple instance learning, Point set distance, Text categorization}
+}
+
+@report{haussler_convolution_1999,
+	title = {Convolution kernels on discrete structures},
+	url = {https://www.soe.ucsc.edu/sites/default/files/technical-reports/UCSC-CRL-99-10.pdf},
+	institution = {Technical report, Department of Computer Science, University of California at Santa Cruz},
+	author = {Haussler, David},
+	urldate = {2017-07-04},
+	date = {1999}
+}
+
+@inproceedings{kwok_marginalized_2007,
+	title = {Marginalized Multi-Instance Kernels.},
+	volume = {7},
+	url = {http://www.aaai.org/Papers/IJCAI/2007/IJCAI07-145.pdf},
+	pages = {901--906},
+	booktitle = {{IJCAI}},
+	author = {Kwok, James T. and Cheung, Pak-Ming},
+	urldate = {2017-07-04},
+	date = {2007}
+}
+
+@inproceedings{gartner_multi-instance_2002,
+	title = {Multi-instance kernels},
+	volume = {2},
+	url = {http://sci2s.ugr.es/keel/pdf/algorithm/congreso/2002-Gartner-ICML.pdf},
+	pages = {179--186},
+	booktitle = {{ICML}},
+	author = {Gärtner, Thomas and Flach, Peter A. and Kowalczyk, Adam and Smola, Alexander J.},
+	urldate = {2017-07-04},
+	date = {2002}
+}
+
+@inproceedings{zhang_multiple_2006,
+	title = {Multiple instance boosting for object detection},
+	url = {http://papers.nips.cc/paper/2926-multiple-instance-boosting-for-object-detection.pdf},
+	pages = {1417--1424},
+	booktitle = {Advances in neural information processing systems},
+	author = {Zhang, Cha and Platt, John C. and Viola, Paul A.},
+	urldate = {2017-07-04},
+	date = {2006}
+}
+
+@inproceedings{andrews_support_2003,
+	title = {Support vector machines for multiple-instance learning},
+	url = {http://papers.nips.cc/paper/2232-support-vector-machines-for-multiple-instance-learning.pdf},
+	pages = {577--584},
+	booktitle = {Advances in neural information processing systems},
+	author = {Andrews, Stuart and Tsochantaridis, Ioannis and Hofmann, Thomas},
+	urldate = {2017-07-04},
+	date = {2003}
+}
+
+@inproceedings{zhu_1-norm_2004,
+	title = {1-norm support vector machines},
+	url = {http://papers.nips.cc/paper/2450-1-norm-support-vector-machines.pdf},
+	pages = {49--56},
+	booktitle = {Advances in neural information processing systems},
+	author = {Zhu, Ji and Rosset, Saharon and Tibshirani, Robert and Hastie, Trevor J.},
+	urldate = {2017-07-01},
+	date = {2004}
+}
+
+@book{dasarathy_nearest_1991,
+	title = {Nearest neighbor ({NN}) norms: nn pattern classification techniques},
+	isbn = {978-0-8186-5930-0},
+	shorttitle = {Nearest neighbor ({NN}) norms},
+	pagetotal = {474},
+	publisher = {{IEEE} Computer Society Press},
+	author = {Dasarathy, Belur V.},
+	date = {1991},
+	langid = {english},
+	note = {Google-Books-{ID}: k2dQAAAAMAAJ},
+	keywords = {Mathematics / Probability \& Statistics / General, Psychology / Cognitive Psychology}
+}
+
+@inproceedings{maron_framework_1998,
+	title = {A framework for multiple-instance learning},
+	url = {http://papers.nips.cc/paper/1346-a-framework-for-multiple-instance-learning.pdf},
+	pages = {570--576},
+	booktitle = {Advances in neural information processing systems},
+	author = {Maron, Oded and Lozano-Pérez, Tomás},
+	urldate = {2017-07-01},
+	date = {1998}
+}
+
+@inproceedings{zhang_em-dd:_2002,
+	title = {{EM}-{DD}: An Improved Multiple-Instance Learning Technique},
+	url = {http://papers.nips.cc/paper/1959-em-dd-an-improved-multiple-instance-learning-technique.pdf},
+	shorttitle = {{EM}-{DD}},
+	pages = {1073--1080},
+	booktitle = {Advances in neural information processing systems},
+	author = {Zhang, Qi and Goldman, Sally A.},
+	urldate = {2017-07-01},
+	date = {2002}
+}
+
+@inproceedings{muandet_learning_2012,
+	title = {Learning from Distributions via Support Measure Machines},
+	url = {http://papers.nips.cc/paper/4825-learning-from-distributions-via-support-measure-machines},
+	pages = {10--18},
+	booktitle = {Advances in neural information processing systems},
+	author = {Muandet, Krikamol and Fukumizu, Kenji and Dinuzzo, Francesco and Schölkopf, Bernhard},
+	urldate = {2017-06-29},
+	date = {2012}
+}
+
+@book{knuth_art_1968,
+	title = {The Art of Computer Programming},
+	isbn = {0-201-03801-3},
+	publisher = {Addison-Wesley},
+	author = {Knuth, Donald E.},
+	date = {1968},
+	langid = {english}
+}
+
+@article{amores_multiple_2013,
+	title = {Multiple instance classification: Review, taxonomy and comparative study},
+	volume = {201},
+	issn = {0004-3702},
+	url = {http://www.sciencedirect.com/science/article/pii/S0004370213000581},
+	doi = {10.1016/j.artint.2013.06.003},
+	shorttitle = {Multiple instance classification},
+	abstract = {Multiple Instance Learning ({MIL}) has become an important topic in the pattern recognition community, and many solutions to this problem have been proposed until now. Despite this fact, there is a lack of comparative studies that shed light into the characteristics and behavior of the different methods. In this work we provide such an analysis focused on the classification task (i.e., leaving out other learning tasks such as regression). In order to perform our study, we implemented fourteen methods grouped into three different families. We analyze the performance of the approaches across a variety of well-known databases, and we also study their behavior in synthetic scenarios in order to highlight their characteristics. As a result of this analysis, we conclude that methods that extract global bag-level information show a clearly superior performance in general. In this sense, the analysis permits us to understand why some types of methods are more successful than others, and it permits us to establish guidelines in the design of new {MIL} methods.},
+	pages = {81--105},
+	journaltitle = {Artificial Intelligence},
+	shortjournal = {Artificial Intelligence},
+	author = {Amores, Jaume},
+	urldate = {2017-05-31},
+	date = {2013-08},
+	keywords = {Bag-of-Words, Codebook, Multi-instance learning}
+}
+
+@inproceedings{zhou_neural_2002,
+	title = {Neural Networks for Multi-Instance Learning},
+	url = {http://cs.nju.edu.cn/zhouzh/zhouzh.files/publication/techrep02.pdf},
+	pages = {455--459},
+	booktitle = {Proceedings of the International Conference on Intelligent Information Technology, Beijing, China},
+	author = {Zhou, Zhi-Hua and Zhang, Min-Ling},
+	urldate = {2017-06-26},
+	date = {2002-08},
+	langid = {english}
+}
+
+@article{dietterich_solving_1997,
+	title = {Solving the multiple instance problem with axis-parallel rectangles},
+	volume = {89},
+	issn = {0004-3702},
+	url = {http://www.sciencedirect.com/science/article/pii/S0004370296000343},
+	doi = {10.1016/S0004-3702(96)00034-3},
+	abstract = {The multiple instance problem arises in tasks where the training examples are ambiguous: a single example object may have many alternative feature vectors (instances) that describe it, and yet only one of those feature vectors may be responsible for the observed classification of the object. This paper describes and compares three kinds of algorithms that learn axis-parallel rectangles to solve the multiple instance problem. Algorithms that ignore the multiple instance problem perform very poorly. An algorithm that directly confronts the multiple instance problem (by attempting to identify which feature vectors are responsible for the observed classifications) performs best, giving 89\% correct predictions on a musk odor prediction task. The paper also illustrates the use of artificial data to debug and compare these algorithms.},
+	pages = {31--71},
+	number = {1},
+	journaltitle = {Artificial Intelligence},
+	shortjournal = {Artificial Intelligence},
+	author = {Dietterich, Thomas G. and Lathrop, Richard H. and Lozano-Pérez, Tomás},
+	urldate = {2017-05-31},
+	date = {1997-01-01},
+	keywords = {Drug design, Machine learning, Structure-activity relationships}
+}
+
+@inproceedings{pevny_discriminative_2016,
+	location = {New York, {NY}, {USA}},
+	title = {Discriminative Models for Multi-instance Problems with Tree Structure},
+	isbn = {978-1-4503-4573-6},
+	url = {http://doi.acm.org/10.1145/2996758.2996761},
+	doi = {10.1145/2996758.2996761},
+	series = {{AISec} '16},
+	abstract = {Modelling network traffic is gaining importance to counter modern security threats of ever increasing sophistication. It is though surprisingly difficult and costly to construct reliable classifiers on top of telemetry data due to the variety and complexity of signals that no human can manage to interpret in full. Obtaining training data with sufficiently large and variable body of labels can thus be seen as a prohibitive problem. The goal of this work is to detect infected computers by observing their {HTTP}(S) traffic collected from network sensors, which are typically proxy servers or network firewalls, while relying on only minimal human input in the model training phase. We propose a discriminative model that makes decisions based on a computer's all traffic observed during a predefined time window (5 minutes in our case). The model is trained on traffic samples collected over equally-sized time windows for a large number of computers, where the only labels needed are (human) verdicts about the computer as a whole (presumed infected vs. presumed clean). As part of training, the model itself learns discriminative patterns in traffic targeted to individual servers and constructs the final high-level classifier on top of them. We show the classifier to perform with very high precision, and demonstrate that the learned traffic patterns can be interpreted as Indicators of Compromise. We implement the discriminative model as a neural network with special structure reflecting two stacked multi instance problems. The main advantages of the proposed configuration include not only improved accuracy and ability to learn from gross labels, but also automatic learning of server types (together with their detectors) that are typically visited by infected computers.},
+	pages = {83--91},
+	booktitle = {Proceedings of the 2016 {ACM} Workshop on Artificial Intelligence and Security},
+	publisher = {{ACM}},
+	author = {Pevny, Tomas and Somol, Petr},
+	urldate = {2017-03-01},
+	date = {2016},
+	keywords = {big data, learning indicators of compromise, malware detection, neural network, user modeling}
+}
+
+@thesis{dedic_hierarchicke_2017,
+	location = {Prague},
+	title = {Hierarchické modely síťového provozu},
+	abstract = {The current approach to the detection of unwanted software by monitoring client traffic uses
+handwritten features as part of the model. This approach has several disadvantages. This thesis proposes
+a fully automated classifier which recognises malware activity at network connection level. The multi-
+instance learning approach was used in order to achieve this. As a part of this thesis the multi-instance
+learning was theoretically defined using two different formalisms and current work in this field was sum-
+marised. Subsequently, there was described the hierarchical structure of an {URL} address which was used
+as an input for the classifier. A model reflecting this inherent hierarchical structure was proposed and
+an explanation of how multi-instance learning was utilised and modified was presented together with the
+description of the implementation of the model using neural networks. Methods of classifier quality as-
+sessment were outlined. The classifier presented here was compared with prior art and the influence of
+model parameters on its quality was assessed.},
+	pagetotal = {41},
+	institution = {Czech Technical University in Prague},
+	type = {Bachelor thesis},
+	author = {Dědič, Marek},
+	date = {2017-07-07}
+}
+
+@inproceedings{chen_contextual_2012,
+	location = {Sichuan, China},
+	title = {Contextual Hausdorff dissimilarity for multi-instance clustering},
+	isbn = {978-1-4673-0024-7},
+	url = {https://ieeexplore.ieee.org/abstract/document/6233889/},
+	doi = {10.1109/FSKD.2012.6233889},
+	eventtitle = {2012 9th International Conference on Fuzzy Systems and Knowledge Discovery},
+	pages = {870--873},
+	booktitle = {Fuzzy Systems and Knowledge Discovery ({FSKD})},
+	publisher = {{IEEE} Computer Society Press},
+	author = {Chen, Ying and Wu, Ou},
+	urldate = {2018-05-14},
+	date = {2012-05}
+}
+
+@inproceedings{pevny_using_2017,
+	title = {Using Neural Network Formalism to Solve Multiple-Instance Problems},
+	isbn = {978-3-319-59072-1},
+	url = {https://link.springer.com/chapter/10.1007/978-3-319-59072-1_17},
+	doi = {10.1007/978-3-319-59072-1_17},
+	series = {Lecture Notes in Computer Science},
+	abstract = {Many objects in the real world are difficult to describe by means of a single numerical vector of a fixed length, whereas describing them by means of a set of vectors is more natural. Therefore, Multiple instance learning ({MIL}) techniques have been constantly gaining in importance throughout the last years. {MIL} formalism assumes that each object (sample) is represented by a set (bag) of feature vectors (instances) of fixed length, where knowledge about objects (e.g., class label) is available on bag level but not necessarily on instance level. Many standard tools including supervised classifiers have been already adapted to {MIL} setting since the problem got formalized in the late nineties. In this work we propose a neural network ({NN}) based formalism that intuitively bridges the gap between {MIL} problem definition and the vast existing knowledge-base of standard models and classifiers. We show that the proposed {NN} formalism is effectively optimizable by a back-propagation algorithm and can reveal unknown patterns inside bags. Comparison to 14 types of classifiers from the prior art on a set of 20 publicly available benchmark datasets confirms the advantages and accuracy of the proposed solution.},
+	eventtitle = {International Symposium on Neural Networks},
+	pages = {135--142},
+	booktitle = {Advances in Neural Networks - {ISNN} 2017},
+	publisher = {Springer, Cham},
+	author = {Pevný, Tomáš and Somol, Petr},
+	urldate = {2018-05-23},
+	date = {2017-06-21},
+	langid = {english}
+}
+
+@article{hochreiter_long_1997,
+	title = {Long Short-Term Memory},
+	volume = {9},
+	issn = {0899-7667},
+	url = {https://doi.org/10.1162/neco.1997.9.8.1735},
+	doi = {10.1162/neco.1997.9.8.1735},
+	abstract = {Learning to store information over extended time intervals by recurrent backpropagation takes a very long time, mostly because of insufficient, decaying error backflow. We briefly review Hochreiter's (1991) analysis of this problem, then address it by introducing a novel, efficient, gradient based method called long short-term memory ({LSTM}). Truncating the gradient where this does not do harm, {LSTM} can learn to bridge minimal time lags in excess of 1000 discrete-time steps by enforcing constant error flow through constant error carousels within special units. Multiplicative gate units learn to open and close access to the constant error flow. {LSTM} is local in space and time; its computational complexity per time step and weight is O. 1. Our experiments with artificial data involve local, distributed, real-valued, and noisy pattern representations. In comparisons with real-time recurrent learning, back propagation through time, recurrent cascade correlation, Elman nets, and neural sequence chunking, {LSTM} leads to many more successful runs, and learns much faster. {LSTM} also solves complex, artificial long-time-lag tasks that have never been solved by previous recurrent network algorithms.},
+	pages = {1735--1780},
+	number = {8},
+	journaltitle = {Neural Computation},
+	shortjournal = {Neural Computation},
+	author = {Hochreiter, Sepp and Schmidhuber, Jürgen},
+	urldate = {2019-03-12},
+	date = {1997-11-01},
+	file = {Snapshot:/home/cisco/Zotero/storage/9HPDCQH6/Hochreiter and Schmidhuber - 1997 - Long Short-Term Memory.html:text/html}
+}
+
+@article{genevay_learning_2017,
+	title = {Learning Generative Models with Sinkhorn Divergences},
+	url = {http://arxiv.org/abs/1706.00292},
+	abstract = {The ability to compare two degenerate probability distributions (i.e. two probability distributions supported on two distinct low-dimensional manifolds living in a much higher-dimensional space) is a crucial problem arising in the estimation of generative models for high-dimensional observations such as those arising in computer vision or natural language. It is known that optimal transport metrics can represent a cure for this problem, since they were specifically designed as an alternative to information divergences to handle such problematic scenarios. Unfortunately, training generative machines using {OT} raises formidable computational and statistical challenges, because of (i) the computational burden of evaluating {OT} losses, (ii) the instability and lack of smoothness of these losses, (iii) the difficulty to estimate robustly these losses and their gradients in high dimension. This paper presents the first tractable computational method to train large scale generative models using an optimal transport loss, and tackles these three issues by relying on two key ideas: (a) entropic smoothing, which turns the original {OT} loss into one that can be computed using Sinkhorn fixed point iterations; (b) algorithmic (automatic) differentiation of these iterations. These two approximations result in a robust and differentiable approximation of the {OT} loss with streamlined {GPU} execution. Entropic smoothing generates a family of losses interpolating between Wasserstein ({OT}) and Maximum Mean Discrepancy ({MMD}), thus allowing to find a sweet spot leveraging the geometry of {OT} and the favorable high-dimensional sample complexity of {MMD} which comes with unbiased gradient estimates. The resulting computational architecture complements nicely standard deep network generative models by a stack of extra layers implementing the loss function.},
+	journaltitle = {{arXiv}:1706.00292 [stat]},
+	author = {Genevay, Aude and Peyré, Gabriel and Cuturi, Marco},
+	urldate = {2019-03-12},
+	date = {2017-06-01},
+	eprinttype = {arxiv},
+	eprint = {1706.00292},
+	keywords = {Statistics - Machine Learning},
+	file = {arXiv\:1706.00292 PDF:/home/cisco/Zotero/storage/TF9GVEJV/Genevay et al. - 2017 - Learning Generative Models with Sinkhorn Divergenc.pdf:application/pdf;arXiv.org Snapshot:/home/cisco/Zotero/storage/AVSMMB6V/Genevay et al. - 2017 - Learning Generative Models with Sinkhorn Divergenc.html:text/html}
+}
+
+@article{tolstikhin_wasserstein_2017,
+	title = {Wasserstein Auto-Encoders},
+	url = {http://arxiv.org/abs/1711.01558},
+	abstract = {We propose the Wasserstein Auto-Encoder ({WAE})---a new algorithm for building a generative model of the data distribution. {WAE} minimizes a penalized form of the Wasserstein distance between the model distribution and the target distribution, which leads to a different regularizer than the one used by the Variational Auto-Encoder ({VAE}). This regularizer encourages the encoded training distribution to match the prior. We compare our algorithm with several other techniques and show that it is a generalization of adversarial auto-encoders ({AAE}). Our experiments show that {WAE} shares many of the properties of {VAEs} (stable training, encoder-decoder architecture, nice latent manifold structure) while generating samples of better quality, as measured by the {FID} score.},
+	journaltitle = {{arXiv}:1711.01558 [cs, stat]},
+	author = {Tolstikhin, Ilya and Bousquet, Olivier and Gelly, Sylvain and Schoelkopf, Bernhard},
+	urldate = {2019-03-12},
+	date = {2017-11-05},
+	eprinttype = {arxiv},
+	eprint = {1711.01558},
+	keywords = {Statistics - Machine Learning, Computer Science - Machine Learning},
+	file = {arXiv.org Snapshot:/home/cisco/Zotero/storage/EP628I3U/Tolstikhin et al. - 2017 - Wasserstein Auto-Encoders.html:text/html}
+}
+
+@article{arjovsky_wasserstein_2017,
+	title = {Wasserstein {GAN}},
+	url = {http://arxiv.org/abs/1701.07875},
+	abstract = {We introduce a new algorithm named {WGAN}, an alternative to traditional {GAN} training. In this new model, we show that we can improve the stability of learning, get rid of problems like mode collapse, and provide meaningful learning curves useful for debugging and hyperparameter searches. Furthermore, we show that the corresponding optimization problem is sound, and provide extensive theoretical work highlighting the deep connections to other distances between distributions.},
+	journaltitle = {{arXiv}:1701.07875 [cs, stat]},
+	author = {Arjovsky, Martin and Chintala, Soumith and Bottou, Léon},
+	urldate = {2019-03-12},
+	date = {2017-01-26},
+	eprinttype = {arxiv},
+	eprint = {1701.07875},
+	keywords = {Statistics - Machine Learning, Computer Science - Machine Learning},
+	file = {arXiv\:1701.07875 PDF:/home/cisco/Zotero/storage/TPG9C7NE/Arjovsky et al. - 2017 - Wasserstein GAN.pdf:application/pdf;arXiv.org Snapshot:/home/cisco/Zotero/storage/X3CPBC25/Arjovsky et al. - 2017 - Wasserstein GAN.html:text/html}
+}
+
+@article{gretton_kernel_2012,
+	title = {A Kernel Two-Sample Test},
+	volume = {13},
+	issn = {{ISSN} 1533-7928},
+	url = {http://www.jmlr.org/papers/v13/gretton12a.html},
+	pages = {723--773},
+	issue = {Mar},
+	journaltitle = {Journal of Machine Learning Research},
+	author = {Gretton, Arthur and Borgwardt, Karsten M. and Rasch, Malte J. and Schölkopf, Bernhard and Smola, Alexander},
+	urldate = {2019-03-12},
+	date = {2012},
+	file = {Full Text PDF:/home/cisco/Zotero/storage/UWAPXAVE/Gretton et al. - 2012 - A Kernel Two-Sample Test.pdf:application/pdf;Snapshot:/home/cisco/Zotero/storage/EP5NU93P/Gretton et al. - 2012 - A Kernel Two-Sample Test.html:text/html}
+}
+
+@article{kingma_auto-encoding_2013,
+	title = {Auto-Encoding Variational Bayes},
+	url = {http://arxiv.org/abs/1312.6114},
+	abstract = {How can we perform efficient inference and learning in directed probabilistic models, in the presence of continuous latent variables with intractable posterior distributions, and large datasets? We introduce a stochastic variational inference and learning algorithm that scales to large datasets and, under some mild differentiability conditions, even works in the intractable case. Our contributions is two-fold. First, we show that a reparameterization of the variational lower bound yields a lower bound estimator that can be straightforwardly optimized using standard stochastic gradient methods. Second, we show that for i.i.d. datasets with continuous latent variables per datapoint, posterior inference can be made especially efficient by fitting an approximate inference model (also called a recognition model) to the intractable posterior using the proposed lower bound estimator. Theoretical advantages are reflected in experimental results.},
+	journaltitle = {{arXiv}:1312.6114 [cs, stat]},
+	author = {Kingma, Diederik P. and Welling, Max},
+	urldate = {2019-03-12},
+	date = {2013-12-20},
+	eprinttype = {arxiv},
+	eprint = {1312.6114},
+	keywords = {Statistics - Machine Learning, Computer Science - Machine Learning},
+	file = {arXiv\:1312.6114 PDF:/home/cisco/Zotero/storage/7WTV6BMU/Kingma and Welling - 2013 - Auto-Encoding Variational Bayes.pdf:application/pdf;arXiv.org Snapshot:/home/cisco/Zotero/storage/634P68A6/Kingma and Welling - 2013 - Auto-Encoding Variational Bayes.html:text/html}
+}
+
+@article{oord_representation_2018,
+	title = {Representation Learning with Contrastive Predictive Coding},
+	url = {http://arxiv.org/abs/1807.03748},
+	abstract = {While supervised learning has enabled great progress in many applications, unsupervised learning has not seen such widespread adoption, and remains an important and challenging endeavor for artificial intelligence. In this work, we propose a universal unsupervised learning approach to extract useful representations from high-dimensional data, which we call Contrastive Predictive Coding. The key insight of our model is to learn such representations by predicting the future in latent space by using powerful autoregressive models. We use a probabilistic contrastive loss which induces the latent space to capture information that is maximally useful to predict future samples. It also makes the model tractable by using negative sampling. While most prior work has focused on evaluating representations for a particular modality, we demonstrate that our approach is able to learn useful representations achieving strong performance on four distinct domains: speech, images, text and reinforcement learning in 3D environments.},
+	journaltitle = {{arXiv}:1807.03748 [cs, stat]},
+	author = {Oord, Aaron van den and Li, Yazhe and Vinyals, Oriol},
+	urldate = {2019-04-02},
+	date = {2018-07-10},
+	eprinttype = {arxiv},
+	eprint = {1807.03748},
+	keywords = {Statistics - Machine Learning, Computer Science - Machine Learning},
+	file = {arXiv\:1807.03748 PDF:/home/cisco/Zotero/storage/XZTM7PUT/Oord et al. - 2018 - Representation Learning with Contrastive Predictiv.pdf:application/pdf;arXiv.org Snapshot:/home/cisco/Zotero/storage/J896EVV4/1807.html:text/html}
+}
+
+@article{kohout_network_2018,
+	title = {Network Traffic Fingerprinting Based on Approximated Kernel Two-Sample Test},
+	volume = {13},
+	issn = {1556-6013},
+	doi = {10.1109/TIFS.2017.2768018},
+	abstract = {Many applications and communication protocols exhibit unique communication patterns that can be exploited to identify them in network traffic. This paper proposes a method to represent these patterns compactly, such that they can be used in different analytical tasks. The method treats each communication as a set of observations of a random variable with unknown probability distribution. This view allows us to derive the representation from a distance between two probability distributions used in maximum mean discrepancy-a non-parametric kernel test. The representation (and distance) can be then easily used in various algorithms for identification of communicating application and data analysis, independently of the specific type of input data.},
+	pages = {788--801},
+	number = {3},
+	journaltitle = {{IEEE} Transactions on Information Forensics and Security},
+	author = {Kohout, J. and Pevný, T.},
+	date = {2018-03},
+	keywords = {analytical tasks, application identification, approximated kernel two-sample test, Communication fingerprinting, data analysis, Inspection, Kernel, Machine learning algorithms, maximum mean discrepancy, Memory management, network traffic fingerprinting, nonparametric kernel test, nonparametric statistics, Probability distribution, probability distributions, protocols, Protocols, Random variables, statistical distributions, telecommunication traffic, unique communication patterns},
+	file = {IEEE Xplore Abstract Record:/home/cisco/Zotero/storage/JGIGN2GK/8089373.html:text/html}
+}
+
+@article{hjelm_learning_2018,
+	title = {Learning deep representations by mutual information estimation and maximization},
+	url = {https://openreview.net/forum?id=Bklr3j0cKX},
+	abstract = {This work investigates unsupervised learning of representations by maximizing mutual information between an input and the output of a deep neural network encoder. Importantly, we show that...},
+	author = {Hjelm, R. Devon and Fedorov, Alex and Lavoie-Marchildon, Samuel and Grewal, Karan and Bachman, Phil and Trischler, Adam and Bengio, Yoshua},
+	urldate = {2019-04-02},
+	date = {2018-09-27},
+	file = {Full Text PDF:/home/cisco/Zotero/storage/RX8AD252/Hjelm et al. - 2018 - Learning deep representations by mutual informatio.pdf:application/pdf;Snapshot:/home/cisco/Zotero/storage/64SVLJNN/forum.html:text/html}
+}
+
+@thesis{jusko_graph-based_2017,
+	title = {Graph-based Detection of Malicious Network Communities},
+	url = {https://dspace.cvut.cz/handle/10467/73702},
+	abstract = {In this thesis, we use graph based methods in conjunction with behavioral modeling to uncover 
+hidden malicious communities and peer-to-peer tra c. 
+The nature of malicious tra c, and its tendency to rally in order to communicate with 
+its owner opens a possibility to detect malicious tra c by revealing hidden sub-structures of 
+network tra c. In fact, besides discovering the presence of an infection, analyzing network 
+tra c also enables inference of valuable context information about the malicious campaign 
+as a whole, often leading to a more precise attribution than is possible using only a hostbased 
+solution. In this work, we focus on the detection approaches that observe the hidden 
+structures and exploit them to uncover malicious command \& control (C\&C) servers. 
+Peer-to-peer (P2P) protocol is a popular choice with malware authors to be used as a C\&C 
+channel. Therefore, we propose a uni ed solution to identify P2P communities operating in a 
+monitored network. We propose an algorithm that is able to 1) progressively discover hosts in 
+the monitored network that cooperate in a P2P network and to 2) identify that P2P network. 
+Starting from a single known host, other hosts participating in the P2P network are identi ed 
+through the analysis of widely available and standardized {IPFIX} ({NetFlow}) data. It is able 
+to identify a large range of both legitimate and malicious P2P networks, is highly scalable 
+and the use of standard meta-data without access to tra c content makes it easy to deploy 
+and justify from privacy protection perspective. 
+Even malware families that do not rely on a P2P-based C\&C channels resort to highly 
+dynamic C\&C structures to counter security industry approaches based on blacklisting known 
+malicious domains. It is therefore important to automatically follow the migration of C\&C 
+servers. We propose to use a well-known Probability Threat Propagation ({PTP}) with a novel 
+graph representation capturing connections from clients to servers. The proposed graph 
+representation is highly condensed, preserves privacy, allows us to  nd malicious domains 
+that cannot be found using existing graph representations and is harder to evade by malware 
+authors. 
+We propose two behavioral models for {HTTP} tra c together with kernel-based similarity 
+and distance functions that can be conveniently used to extend the  ndings of {PTP}. For 
+any domain marked as malicious by {PTP} we can  nd other domains with identical or similar 
+behavior, which are likely also malicious. This signi cantly increases the number of discovered 
+malicious domains. 
+All proposed algorithms and representations are veri ed using extensive data sets spanning 
+hundreds of independent networks. The validity of proposed approaches was further veri ed 
+in a large-scale deployment within the Cisco Cognitive Threat Analytics.},
+	type = {phdthesis},
+	author = {Jusko, Ján},
+	urldate = {2019-04-02},
+	date = {2017},
+	langid = {english},
+	file = {Full Text PDF:/home/cisco/Zotero/storage/ZE753DCR/Jusko - 2017 - Graph-based Detection of Malicious Network Communi.pdf:application/pdf;Snapshot:/home/cisco/Zotero/storage/AZ5L27HZ/73702.html:text/html}
+}
+
+@thesis{paterek_vyuziti_2018,
+	location = {Prague},
+	title = {Využití multi-instančního učení v bezpečnosti počítačových sítí},
+	abstract = {Multi-inštančné učenie je typom strojového učenia, v ktorom sú inštancie usporiadané do súborov. V tomto odvetví zohrávajú dôležitú úlohu reprezentácie a funkcie pre výpočet vzdialenosti medzi súbormi. Táto práca skúma ich rôzne typy zavedenia dostupné v literatúre, a navyše navrhnuje možné modifikácie či úplne nový prístup k reprezentácii súboru. Ďalej popisuje postupy, ktorých ciel’om je experimentálne overenie kvality jednotlivých funkcií vzdialenosti a reprezentácií. Aplikáciou týchto postupov boli získané cenné závery, ktoré poukazujú napríklad na to, že kombinovanie bežne používaných funkcií vzdialenosti viedlo ku zvýšeniu kvality a konzistentnosti dosahovaných výsledkov.},
+	pagetotal = {84},
+	institution = {Czech Technical University in Prague},
+	type = {Bachelor thesis},
+	author = {Páterek, Benjamín},
+	date = {2018-09-04},
+	file = {Páterek - 2018 - Využití multi-instančního učení v bezpečnosti počí.pdf:/home/cisco/Zotero/storage/THVE57GM/Páterek - 2018 - Využití multi-instančního učení v bezpečnosti počí.pdf:application/pdf}
+}
+
+@inproceedings{kumar_invariant_2007,
+	title = {An Invariant Large Margin Nearest Neighbour Classifier},
+	doi = {10.1109/ICCV.2007.4409041},
+	abstract = {The k-nearest neighbour ({kNN}) rule is a simple and effective method for multi-way classification that is much used in Computer Vision. However, its performance depends heavily on the distance metric being employed. The recently proposed large margin nearest neighbour ({LMNN}) classifier [21] learns a distance metric for {kNN} classification and thereby improves its accuracy. Learning involves optimizing a convex problem using semidefinite programming ({SDP}). We extend the {LMNN} framework to incorporate knowledge about invariance of the data. The main contributions of our work are three fold: (i) Invariances to multivariate polynomial transformations are incorporated without explicitly adding more training data during learning - these can approximate common transformations such as rotations and affinities; (ii) the incorporation of different regularizes on the parameters being learnt; and (Hi) for all these variations, we show that the distance metric can still be obtained by solving a convex {SDP} problem. We call the resulting formulation invariant {LMNN} ({lLMNN}) classifier. We test our approach to learn a metric for matching (i) feature vectors from the standard Iris dataset; and (ii) faces obtained from {TV} video (an episode of 'Buffy the Vampire Slayer'). We compare our method with the state of the art classifiers and demonstrate improvements.},
+	eventtitle = {2007 {IEEE} 11th International Conference on Computer Vision},
+	pages = {1--8},
+	booktitle = {2007 {IEEE} 11th International Conference on Computer Vision},
+	author = {Kumar, M. P. and Torr, P. H. S. and Zisserman, A.},
+	date = {2007-10},
+	keywords = {computer vision, object recognition, Object recognition, Computer vision, convex programming, Face detection, feature vectors, image classification, Image recognition, Information retrieval, invariant large margin nearest neighbour classifier, Iris, k-nearest neighbour rule, multivariate polynomial transformations, multiway classification, Polynomials, semidefinite programming, standard iris dataset, Testing, Training data, {TV}},
+	file = {IEEE Xplore Abstract Record:/home/cisco/Zotero/storage/8ZRR8RM5/4409041.html:text/html}
+}
+
+@article{rippel_metric_2015,
+	title = {Metric Learning with Adaptive Density Discrimination},
+	abstract = {Distance metric learning ({DML}) approaches learn a transformation to a representation space where distance is in correspondence with a predefined notion of similarity. While such models offer a number of compelling benefits, it has been difficult for these to compete with modern classification algorithms in performance and even in feature extraction.
+In this work, we propose a novel approach explicitly designed to address a number of subtle yet important issues which have stymied earlier {DML} algorithms. It maintains an explicit model of the distributions of the different classes in representation space. It then employs this knowledge to adaptively assess similarity, and achieve local discrimination by penalizing class distribution overlap.
+We demonstrate the effectiveness of this idea on several tasks. Our approach achieves state-of-the-art classification results on a number of fine-grained visual recognition datasets, surpassing the standard softmax classifier and outperforming triplet loss by a relative margin of 30-40\%. In terms of computational performance, it alleviates training inefficiencies in the traditional triplet loss, reaching the same error in 5-30 times fewer iterations. Beyond classification, we further validate the saliency of the learnt representations via their attribute concentration and hierarchy recovery properties, achieving 10-25\% relative gains on the softmax classifier and 25-50\% on triplet loss in these tasks.},
+	author = {Rippel, Oren and Paluri, Manohar and Dollar, Piotr and Bourdev, Lubomir},
+	date = {2015-11-18}
+}
+
+@inproceedings{bautista_deep_2017,
+	title = {Deep Unsupervised Similarity Learning Using Partially Ordered Sets},
+	url = {http://openaccess.thecvf.com/content_cvpr_2017/html/Bautista_Deep_Unsupervised_Similarity_CVPR_2017_paper.html},
+	eventtitle = {Proceedings of the {IEEE} Conference on Computer Vision and Pattern Recognition},
+	pages = {7130--7139},
+	author = {Bautista, Miguel A. and Sanakoyeu, Artsiom and Ommer, Bjorn},
+	urldate = {2019-06-24},
+	date = {2017},
+	file = {Full Text PDF:/home/cisco/Zotero/storage/KHJ7ARGC/Bautista et al. - 2017 - Deep Unsupervised Similarity Learning Using Partia.pdf:application/pdf;Snapshot:/home/cisco/Zotero/storage/KJT26GS6/Bautista_Deep_Unsupervised_Similarity_CVPR_2017_paper.html:text/html}
+}
+
+@incollection{snell_prototypical_2017,
+	title = {Prototypical Networks for Few-shot Learning},
+	url = {http://papers.nips.cc/paper/6996-prototypical-networks-for-few-shot-learning.pdf},
+	pages = {4077--4087},
+	booktitle = {Advances in Neural Information Processing Systems 30},
+	publisher = {Curran Associates, Inc.},
+	author = {Snell, Jake and Swersky, Kevin and Zemel, Richard},
+	editor = {Guyon, I. and Luxburg, U. V. and Bengio, S. and Wallach, H. and Fergus, R. and Vishwanathan, S. and Garnett, R.},
+	urldate = {2019-06-24},
+	date = {2017},
+	file = {NIPS Full Text PDF:/home/cisco/Zotero/storage/2Q9HML5E/Snell et al. - 2017 - Prototypical Networks for Few-shot Learning.pdf:application/pdf;NIPS Snapshot:/home/cisco/Zotero/storage/GTG7JPSC/6996-prototypical-networks-for-few-shot-learning.html:text/html}
+}
+
+@incollection{weinberger_distance_2006,
+	title = {Distance Metric Learning for Large Margin Nearest Neighbor Classification},
+	url = {http://papers.nips.cc/paper/2795-distance-metric-learning-for-large-margin-nearest-neighbor-classification.pdf},
+	pages = {1473--1480},
+	booktitle = {Advances in Neural Information Processing Systems 18},
+	publisher = {{MIT} Press},
+	author = {Weinberger, Kilian Q and Blitzer, John and Saul, Lawrence K.},
+	editor = {Weiss, Y. and Schölkopf, B. and Platt, J. C.},
+	urldate = {2019-06-27},
+	date = {2006}
+}

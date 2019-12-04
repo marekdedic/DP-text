@@ -1,0 +1,61 @@
+\input{preamble.tex}
+
+\begin{document}
+\def\documentdate{January 6\textsuperscript{th} 2020} % TODO
+
+\pagestyle{empty}
+
+\input{titlepage.tex}
+
+\clearpage
+
+\null\vfill
+\begin{center}
+	- Thesis assignment -
+\end{center}
+\vfill
+
+\clearpage
+
+\input{acknowledgment.tex}
+
+\clearpage
+
+\input{abstract.tex}
+
+\clearpage
+
+\pagestyle{plain}
+
+\tableofcontents
+
+\input{introduction.tex}
+
+\pagestyle{headings}
+
+\input{MIL.tex}
+\input{CPC.tex}
+\input{triplet.tex}
+\input{magnet.tex}
+
+\pagestyle{plain}
+
+\input{conclusion.tex}
+
+\clearpage
+
+\begingroup
+	\let\clearpage\relax
+
+	\listoftodos
+
+	\listoffigures
+	\addcontentsline{toc}{chapter}{List of Figures}
+	\listofalgorithms
+	\addcontentsline{toc}{chapter}{List of Algorithms}
+\endgroup
+
+\printbibliography
+\addcontentsline{toc}{chapter}{Bibliography}
+
+\end{document}
