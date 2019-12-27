@@ -72,20 +72,20 @@ Multi-instance learning classification uses a dataset consisting of pairs of bag
 
 In this example, the keys (or, more precisely their descriptions by feature vectors) are the input objects from \( \mathspace{X} \). The key chains are bags. Even though it makes sense to ask for each key whether it unlocks the supply room, this information is not provided. Instead only a key-chain-level information is available. On the other hand, it may be stated that a key chain opens the supply room door if and only if it contains a key which opens the door. This naturally leads to the following definition:
 
-\begin{define}\label{baglabel}
+\begin{define}\label{def:baglabel}
 	Let \( \mathspace{X} \) be an input space and \( \mathspace{Y} \) a label space such that
 	\[ \left( \forall x \in \mathspace{X} \right) \left( \exists_1 y_x \in \mathspace{Y} \right) \]
 	Let \( \mathspace{B} \) be a bag space. Let maximum be well-defined in \( \mathspace{Y} \). Then the label of the bag \( B \in \mathspace{B} \) is
 	\[ y_B = \max_{x \in B} \left( y_x \right) \in \mathspace{Y} \]
 \end{define}
 
-As will later be shown in sections \ref{bag-space-paradigm} and \ref{embedded-space-paradigm}, this isn't the only interpretation of multi-instance learning. There are problems where the instance-level labels are not only no known, but even not well-defined as the bag isn't seen as a mere collection of objects but as a distinct object of its own.
+As will later be shown in sections \ref{sec:bag-space-paradigm} and \ref{sec:embedded-space-paradigm}, this isn't the only interpretation of multi-instance learning. There are problems where the instance-level labels are not only no known, but even not well-defined as the bag isn't seen as a mere collection of objects but as a distinct object of its own.
 
 \section{Approaches to solving multi-instance problems}
 In this section, there are described the three major approaches to solving multi-instance classification problems. The section is sourced primarily from \cite{pevny_using_2017} and \cite{pevny_discriminative_2016}.
 
 \subsection{Instance-space paradigm}
-Instance-space paradigm is the original approach proposed by \cite{dietterich_solving_1997}. The existence of labels on the level of instances is presumed, even though such labels aren't known even in the training phase. The goal of this approach is to model the unknown instance-level labelling as \( f : \mathspace{X} \to \mathspace{Y} \) and use it to compute the bag-level label analogically to definition \ref{baglabel}, that is
+Instance-space paradigm is the original approach proposed by \cite{dietterich_solving_1997}. The existence of labels on the level of instances is presumed, even though such labels aren't known even in the training phase. The goal of this approach is to model the unknown instance-level labelling as \( f : \mathspace{X} \to \mathspace{Y} \) and use it to compute the bag-level label analogically to definition \ref{def:baglabel}, that is
 \[ y_B = \max_{x \in B } \left( f \left( x \right) \right) \]
 
 There are many applications of instance-space paradigm, the most important of which are described next. (Also see \cite{andrews_support_2003} \cite{zhang_multiple_2006})
@@ -107,8 +107,8 @@ With such a well-defined global loss function, the back-propagation algorithm ca
 
 \name{EM-DD}, proposed by \cite{zhang_em-dd:_2002}, combines the \name{expectation-maximization} algorithm (see \cite{dempster_maximum_1977}) with the \name{diverse density} algorithm (see \cite{maron_framework_1998}). The EM-DD algorithm starts with a target hypothesis \( h \in \mathspace{Y} \), which is then refined with the EM algorithm. In the E-step, the instance thought to be most responsible for the label of each bag is picked. In the M-step, the gradient ascent algorithm is used to find a new hypothesis \( h' \) which maximizes \( \mathrm{DD} \left( h \right) \). \( \mathrm{DD} \left( h \right) \) corresponds to the likelihood that \( h \) is the actual target. These steps are then repeated, refining the hypothesis.
 
-\subsection{Bag-space paradigm}\label{bag-space-paradigm}
-The bag-space paradigm is a formalism in which the notion of instance-level labels is abandoned (that is, the labels are presumed to not only be unknown, but even undefined) and only bag-level labels are assumed to exist. The definition \ref{baglabel} is no longer used, so some other way of working with bags must be devised. In order to do this, a bag distance function or a bag kernel function is defined, having the form
+\subsection{Bag-space paradigm}\label{sec:bag-space-paradigm}
+The bag-space paradigm is a formalism in which the notion of instance-level labels is abandoned (that is, the labels are presumed to not only be unknown, but even undefined) and only bag-level labels are assumed to exist. The definition \ref{def:baglabel} is no longer used, so some other way of working with bags must be devised. In order to do this, a bag distance function or a bag kernel function is defined, having the form
 \[ k : \mathspace{B} \times \mathspace{B} \to \mathfield{R}_0^+ \]
 Because the notion of an instance-level label is no longer used, the sought classification function is of the form \( f : \mathspace{B} \to \mathspace{Y} \).
 
@@ -120,7 +120,7 @@ For each bag, the \( r \)-nearest references and the \( c \)-nearest citers are 
 
 For more applications using the bag-space paradigm, see \cite{wang_solving_2000}, \cite{kwok_marginalized_2007}, \cite{gartner_multi-instance_2002}, \cite{haussler_convolution_1999}, \cite{zhou_multi-instance_2009} and \cite{muandet_learning_2012}.
 
-\subsection{Embedded-space paradigm}\label{embedded-space-paradigm}
+\subsection{Embedded-space paradigm}\label{sec:embedded-space-paradigm}
 In the embedded space paradigm, labels are only defined on the level of bags, same as in the bag-space paradigm. In order for these bag labels to be learned, an embedding function of the form \( \phi : \mathspace{B} \to \bar{\mathspace{X}} \) must be defined, where \( \bar{\mathspace{X}} \) is a latent space, which may or may not be identical to \( \mathspace{X} \). Using this function, each bag can be represented by an object \( \phi \left( B \right) \in \bar{\mathspace{X}} \), which makes it possible to use any off-the-shelf supervised learning algorithm acting on \( \bar{\mathspace{X}} \). Amongst the simplest embedding functions are e. g. element-wise minimum, maximum and mean. A more complicated embedding function may for example apply a neural network to each instance of the bag and subsequently pool the instances using one of the aforementioned functions.
 
 \name{MILES}, proposed by \cite{chen_miles:_2006}, uses an instance dictionary \( \mathspace{D} \) to define an embedding function representing the degree of similarity between the bag and the dictionary, that is
