@@ -4,7 +4,7 @@
 
 \name{Multi-instance learning} is an approach to machine learning first described by \cite{dietterich_solving_1997}. In its original form, multi-instance learning (often referred to just as \name{MIL}) was used for \name{supervised learning}, that is to solve problems for which there is already a dataset of known examples and solutions at the ready. An example of that is in the work \cite{amores_multiple_2013}. The other class of problems solved is \name{unsupervised learning}, where no solutions are available in the training phase. Among these is for example \cite{chen_contextual_2012}.
 
-The multi-instance learning paradigm is a type of representation learning on structured data. While classical machine learning algorithms typically operate on samples represented by a vector of numbers each, MIL relaxes this requirement by representing a sample as a \name{bag} of an arbitrary number of objects. This bag is then treated as one sample - e. g. in classification, there is a label for the whole bag.
+The multi-instance learning paradigm is a type of representation learning on structured data. While classical machine learning algorithms typically operate on samples represented by a vector of numbers each, MIL relaxes this requirement by representing a sample as a \name{bag} of an arbitrary number of objects. This bag is then treated as one sample -- e.g. in classification, there is a label for the whole bag.
 
 In this chapter, a formalism for describing multi-instance learning in the context of classification is presented, largely consisting of a translation of \cite{dedic_hierarchicke_2017}, where the formalism was first introduced. Then, a review of methods for MIL is presented.
 
@@ -13,7 +13,7 @@ In this chapter, a formalism for describing multi-instance learning in the conte
 A multiset is a set allowing repeated elements. Alternatively, it can be seen as an unordered tuple. \cite{knuth_art_1968} formally defines the concept as follows:
 
 \begin{define}
-	Let \( \mathset{A} \) be a set and \( m : \mathset{A} \to \mathfield{N} \setminus \left\{ 0 \right\} \). The tuple \( \left( \mathset{A}, m \right) \) is called a \name{multiset} over the set \( \mathset{A} \). For an \( a \in \mathset{A} \), the number \( m \left( a \right) \) is called the \name{multiplicity} (i. e. the number of occurrences) of \( a \). If \( a \in \mathset{A} \), then \( a \) is called an element of \( \left( \mathset{A}, m \right) \) and denoted as
+	Let \( \mathset{A} \) be a set and \( m : \mathset{A} \to \mathfield{N} \setminus \left\{ 0 \right\} \). The tuple \( \left( \mathset{A}, m \right) \) is called a \name{multiset} over the set \( \mathset{A} \). For an \( a \in \mathset{A} \), the number \( m \left( a \right) \) is called the \name{multiplicity} (i.e. the number of occurrences) of \( a \). If \( a \in \mathset{A} \), then \( a \) is called an element of \( \left( \mathset{A}, m \right) \) and denoted as
 	\[ a \in \left( \mathset{A}, m \right) \]
 \end{define}
 
@@ -51,7 +51,7 @@ The previous definition allows for a generalization of the concept of a power se
 \end{define}
 
 \section{Multi-instance learning}
-Multi-instance learning (see \cite{dietterich_solving_1997}) in its original form is an approach to representing and solving problems where there exist samples from an input space \( \mathspace{X} \) and their corresponding targets from an output space \( \mathspace{Y} \) (whose elements are often called labels or classes) and the goal is to find a mapping of input objects to output objects which correctly predicts the targets on the data. Unlike classical supervised learning, there is no known solution consisting of pairs of input and output objects. Instead, the input objects are grouped together into so called bags, which are defined as follows:
+Multi-instance learning (see \cite{dietterich_solving_1997}) in its original form is an approach to representing and solving problems where there exist samples from an input space \( \mathspace{X} \) and their corresponding targets from an output space \( \mathspace{Y} \) (whose elements are often called labels or classes) and the goal is to find a mapping of input objects to output objects which correctly predicts the targets on the data. Unlike classical supervised learning, there is no known solution consisting of pairs of input and output objects. Instead, the input objects are grouped together into so-called bags, which are defined as follows:
 
 \begin{define}
 	Let \( \mathspace{X} \) be a set of input objects. Then the \name{bag space} is a multiset \( \mathspace{B} \) with the properties
@@ -67,10 +67,10 @@ Multi-instance learning classification uses a dataset consisting of pairs of bag
 \begin{example}
 	Suppose there is a keyed lock on the door to the supply room in an office. Each staff member has a key chain containing several keys. One key on each key chain can open the supply room door. For some staff members, their supply room key opens only the supply room door; while for other staff members, their supply room key may open one or more other doors (e.g., their office door, the mail room door, the conference room door).
 
-	Suppose you are a lock smith and you are attempting to infer the most general required shape that a key must have in order to open the supply room door. If you knew this required shape, you could predict, by examining any key, whether that key could unlock the door. What makes your lock smith job difficult is that the staff members are uncooperative. Instead of showing you which key on their key chains opens the supply room door, they just hand you their entire key chain and ask you to figure it out for yourself! Furthermore, you are not given access to the supply room door, so you can’t try out the individual keys. Instead, you must examine the shapes of all of the keys on the key rings and infer the answer.
+	Suppose you are a lock smith and you are attempting to infer the most general required shape that a key must have in order to open the supply room door. If you knew this required shape, you could predict, by examining any key, whether that key could unlock the door. What makes your lock smith job difficult is that the staff members are uncooperative. Instead of showing you which key on their key chains opens the supply room door, they just hand you their entire key chain and ask you to figure it out for yourself! Furthermore, you are not given access to the supply room door, so you can’t try out the individual keys. Instead, you must examine the shapes of all the keys on the key rings and infer the answer.
 \end{example}
 
-In this example, the keys (or, more precisely their descriptions by feature vectors) are the input objects from \( \mathspace{X} \). The key chains are bags. Even though it makes sense to ask for each key whether it unlocks the supply room, this information is not provided. Instead only a key-chain-level information is available. On the other hand, it may be stated that a key chain opens the supply room door if and only if it contains a key which opens the door. This naturally leads to the following definition:
+In this example, the keys (or, more precisely their descriptions by feature vectors) are the input objects from \( \mathspace{X} \). The key chains are bags. Even though it makes sense to ask for each key whether it unlocks the supply room, this information is not provided. Instead, only a key-chain-level information is available. On the other hand, it may be stated that a key chain opens the supply room door if and only if it contains a key which opens the door. This naturally leads to the following definition:
 
 \begin{define}\label{def:baglabel}
 	Let \( \mathspace{X} \) be an input space and \( \mathspace{Y} \) a label space such that
@@ -90,7 +90,7 @@ Instance-space paradigm is the original approach proposed by \cite{dietterich_so
 
 There are many applications of instance-space paradigm, the most important of which are described next. (Also see \cite{andrews_support_2003} \cite{zhang_multiple_2006})
 
-\name{BP-MIP}, proposed by \cite{zhou_neural_2002}, is an application of multi-instance learning to binary classification, i. e. \( \mathspace{Y} = \left\{ -1, +1 \right\} \). A feedforward neural network is used, its output for the \( j \)-th instance of the \( i \)-th bag denoted \( o_{ij} \). An instance-level error function is defined as
+\name{BP-MIP}, proposed by \cite{zhou_neural_2002}, is an application of multi-instance learning to binary classification, i.e. \( \mathspace{Y} = \left\{ -1, +1 \right\} \). A feedforward neural network is used, its output for the \( j \)-th instance of the \( i \)-th bag denoted \( o_{ij} \). An instance-level error function is defined as
 \[ E_{ij} = \begin{cases}
 		0 &\text{for} \quad y_{B_i} = -1 \wedge o_{ij} < 0.5 \\
 		0 &\text{for} \quad y_{B_i} = +1 \wedge o_{ij} \geq 0.5 \\
@@ -116,12 +116,12 @@ Because the notion of an instance-level label is no longer used, the sought clas
 \[ H \left( B_1, B_2 \right) = \min_{x \in B_1} \min_{y \in B_2} \left\lVert x - y \right\rVert \]
 The \( k \)-nearest neighbour algorithm (see \cite{dasarathy_nearest_1991}) is modified for this application by adding a system of \name{citations} and \name{references}. The \( r \)-nearest references are the nearest neighbours from the vanilla kNN algorithm and the \( c \)-nearest citers are defined as
 \[ \mathrm{Citers} \left( x, c \right) = \left\{ x_i \middle| \mathrm{Rank} \left( x_i, x \right) \leq c \wedge x_i \in B \right\} \]
-For each bag, the \( r \)-nearest references and the \( c \)-nearest citers are found using the modified Hausdorff distance. If among those there are more positive bags then there are negative ones, the bag is labelled as positive. Otherwise the bag is labelled as negative.
+For each bag, the \( r \)-nearest references and the \( c \)-nearest citers are found using the modified Hausdorff distance. If among those there are more positive bags than there are negative ones, the bag is labelled as positive. Otherwise, the bag is labelled as negative.
 
 For more applications using the bag-space paradigm, see \cite{wang_solving_2000}, \cite{kwok_marginalized_2007}, \cite{gartner_multi-instance_2002}, \cite{haussler_convolution_1999}, \cite{zhou_multi-instance_2009} and \cite{muandet_learning_2012}.
 
 \subsection{Embedded-space paradigm}\label{sec:embedded-space-paradigm}
-In the embedded space paradigm, labels are only defined on the level of bags, same as in the bag-space paradigm. In order for these bag labels to be learned, an embedding function of the form \( \phi : \mathspace{B} \to \bar{\mathspace{X}} \) must be defined, where \( \bar{\mathspace{X}} \) is a latent space, which may or may not be identical to \( \mathspace{X} \). Using this function, each bag can be represented by an object \( \phi \left( B \right) \in \bar{\mathspace{X}} \), which makes it possible to use any off-the-shelf supervised learning algorithm acting on \( \bar{\mathspace{X}} \). Amongst the simplest embedding functions are e. g. element-wise minimum, maximum and mean. A more complicated embedding function may for example apply a neural network to each instance of the bag and subsequently pool the instances using one of the aforementioned functions.
+In the embedded space paradigm, labels are only defined on the level of bags, same as in the bag-space paradigm. In order for these bag labels to be learned, an embedding function of the form \( \phi : \mathspace{B} \to \bar{\mathspace{X}} \) must be defined, where \( \bar{\mathspace{X}} \) is a latent space, which may or may not be identical to \( \mathspace{X} \). Using this function, each bag can be represented by an object \( \phi \left( B \right) \in \bar{\mathspace{X}} \), which makes it possible to use any off-the-shelf supervised learning algorithm acting on \( \bar{\mathspace{X}} \). Among the simplest embedding functions are e.g. element-wise minimum, maximum and mean. A more complicated embedding function may for example apply a neural network to each instance of the bag and subsequently pool the instances using one of the aforementioned functions.
 
 \name{MILES}, proposed by \cite{chen_miles:_2006}, uses an instance dictionary \( \mathspace{D} \) to define an embedding function representing the degree of similarity between the bag and the dictionary, that is
 \[ \phi : \mathspace{B} \to \mathfield{R}^{\left\lvert \mathspace{D} \right\rvert} \]
