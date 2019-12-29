@@ -1,1 +1,37 @@
-\chapter{Clusteric metric}\label{chap:clustering-metric}
+\chapter{Learning a metric for clustering}\label{chap:clustering-metric}
+In section \ref{sec:mil-clustering}, a method for learning a representation \( \phi \) was shown. In order to learn the parameters of the representation, a clustering-loss function is required in the form
+\[ L_C : \mathcal{P}^M \left( \bar{\mathspace{X}} \right) \to \mathfield{R} \]
+In this chapter, several different ways of constructing such a clustering-loss function are explored.
+
+\section{Contrastive predictive coding}
+Contrastive predictive coding is a technique first introduced by \cite{oord_representation_2019}. In this section, the original article is first presented, with its application to MIL clustering introduced subsequently.
+
+\subsection{Original article}
+\name{Contrastive predictive coding} (also referred to as \name{CPC}) builds the model on the ideas from predictive coding (see \cite{elias_predictive_1955}), a technique from information theory. In predictive coding, a sequence of messages is transmitted. Both the transmitter and the receiver try to predict future messages from all the past ones. Only the difference between the predicted and actual message is then actually transmitted.
+
+CPC is an approach to representing time series by modelling future data from the past. In order to do that, the model learns high-level representations of the data and discards noise in the data. The further in future the model predicts, the less shared information is available and thus the global structure needs to be inferred better.
+
+First, a non-linear encoder \( g_\mathrm{enc} \) is used to map an input sequence of data to their latent representations:
+\[ g_\mathrm{enc} : x_t \mapsto z_t \]
+Next, an autoregressive model \( g_\mathrm{ar} \) summarizes all latent representations up to a certain point \( t \) and produces a context latent representation:
+\[ c_t = g_\mathrm{ar} \left( \left\{ z_i \middle| i \leq t \right\} \right) \]
+Modelling \( p_k \left( x_{t + k} \middle| c_t \right) \) directly using a conditional generative model is computationally very expensive, which is the reason why this approach hasn't been chosen. Instead, the density ratio which preserves the mutual information between \( x_{t + k} \) and \( c_t \) has been modelled as follows:
+\begin{equation}\label{equa:CPC-model}
+  f_k \left( x_{t + k}, c_t \right) \propto \frac{p \left( x_{t + k} \middle| c_t \right)}{p \left( x_{t + k} \right)}
+\end{equation}
+A log-bilinear model was used:
+\[ f_k \left( x_{t + k}, c_t \right) = \mathrm{exp} \left( z_{t + k}^T W_k c_t \right) \]
+
+Both \( g_\mathrm{enc} \) and \( g_\mathrm{ar} \) have been trained to jointly optimize a loss based on the Noise Contrastive Estimation (see \cite{gutmann_noise-contrastive_2010}), which is called \name{InfoNCE} in \cite{oord_representation_2019}. Given a set \( \mathset{X} = \left\{ x_1, \dots, x_N \right\} \) containing one positive sample from \( p \left( x_{t + k} \middle| c_t \right) \) and \( N - 1 \) negative samples from \( p \left( x_{t + k} \right) \), the InfoNCE loss is as follows:
+\[ L_N = - \underset{\mathset{X}}{\mathbb{E}} \left[ \log \frac{f_k \left( x_{t + k}, c_t \right)}{\sum_{x_j \in \mathset{X}} f_k \left( x_j, c_t \right)} \right] \]
+Optimising \( L_N \) will result in \( f_k \) estimating the density ratio from equation \ref{equa:CPC-model}.
+
+The model is illustrated in figure \ref{fig:CPC-paper-model}.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.9\textwidth]{images/CPC-paper-model.pdf}
+	\caption{The Contrastive Predictive Coding model. Image from \cite{oord_representation_2019}}\label{fig:CPC-paper-model}
+\end{figure}
+
+\subsection{Application to MIL}
