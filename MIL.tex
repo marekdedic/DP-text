@@ -50,6 +50,19 @@ The previous definition allows for a generalization of the concept of a power se
 	\[ \left\lvert \mathset{B} \right\rvert = \sum_{a \in \mathset{A}} m \left( a \right) \]
 \end{define}
 
+The summation of two multisets can be easily defined as follows.
+
+\begin{define}\label{def:multiset-sum}
+	Let \( \mathset{B}_1 = \left( \mathset{A}_1, m_1 \right) \) and \( \mathset{B}_2 = \left( \mathset{A}_2, m_2 \right) \) be two multisets. Then the sum of \( \mathset{B}_1 \) and \( \mathset{B}_2 \) is
+	\[ \mathset{B}_1 \oplus \mathset{B}_2 = \left( \mathset{A}_1 \cup \mathset{A}_2, m \right) \]
+	where
+	\[ m \left( a \right) = \begin{cases}
+			m_1 \left( a \right) &\text{for} \quad a \in \mathset{A}_1 \setminus \mathset{A}_2 \\
+			m_2 \left( a \right) &\text{for} \quad a \in \mathset{A}_2 \setminus \mathset{A}_1 \\
+			m_1 \left( a \right) + m_2 \left( a \right) &\text{for} \quad a \in \mathset{A}_1 \cap \mathset{A}_2 \\
+		\end{cases} \]
+\end{define}
+
 \section{Multi-instance learning}
 Multi-instance learning (see \cite{dietterich_solving_1997}) in its original form is an approach to representing and solving problems where there exist samples from an input space \( \mathspace{X} \) and their corresponding targets from an output space \( \mathspace{Y} \) (whose elements are often called labels or classes) and the goal is to find a mapping of input objects to output objects which correctly predicts the targets on the data. Unlike classical supervised learning, there is no known solution consisting of pairs of input and output objects. Instead, the input objects are grouped together into so-called bags, which are defined as follows:
 

@@ -35,3 +35,16 @@ The model is illustrated in figure \ref{fig:CPC-paper-model}.
 \end{figure}
 
 \subsection{Application to MIL}
+
+The core idea taken from CPC to clustering is that of the InfoNCE loss. The actual application is based on the following idea. If a bag is split into two parts, it is reasonable to expect that the representations of these two parts would be close to one another. On the other hand, if a random bag were to be drawn from the data (as a simple random sample with replacement), it is reasonable to expect it to be relatively far from any actual bag present in the data. Using these assumptions, the following clustering loss is constructed:
+
+\[ B_k^{(1)} \oplus B_k^{(2)} = B_k \in \mathspace{B} \]
+\[ B'_j = \mathrm{srswr} \left( \mathspace{X} \right) \]
+\[ L_\mathrm{CPC} = \log \left\lVert \phi \left( B_k^{(1)} \right) - \phi \left( B_k^{(2)} \right) \right\rVert^2 - \log \sum_{j = 1}^K \left\lVert \phi \left( B_k^{(1)} \right) - \phi \left( B'_j \right) \right\rVert^2 \]
+where \( \oplus \) is the multiset sum (see definition \ref{def:multiset-sum}). The first term of the loss function depicts the notion that the representations of the two parts of the bag should be close to one another. The second term depicts the notion that a random bag should be far from all the bags\footnote{On the off-chance a random bag would be close to \( B_k^{(1)} \), this would be outweighed by the other terms.}. The choice to use the first part of the bag in the second term has no effect as the two parts are chosen randomly. The value \( K \) is a hyper-parameter of this method.
+
+This method can be further simplified. In order to not have to draw a lot of random bags, it can be reasonably expected that, on average, the representations of two parts of two mismatched bags \( B_{k_1}^{(1)} \) and \( B_{k_2}^{(2)} \) should be far apart. The matrix \( \mathmat{D} \) is constructed as
+\[ \mathmat{D}_{ij} = \left\lVert \phi \left( B_i^{(1)} \right) - \phi \left( B_j^{(2)} \right) \right\rVert_2^2 \]
+The distances of the corresponding halves are found on the diagonal of \( \mathmat{D} \), whereas the distances of mismatched halves are in the rest of the matrix. Under this assumptions the final loss for the CPC method is
+\[ L_\mathrm{CPC} = \frac{1}{n} \sum_{i = 1}^n \left( \log \left( D_{ii} \right) - \log \sum_{\substack{j = 1 \\ j \neq i}}^n D_{ij} \right) \]
+where \( n \) is the number of bags.
