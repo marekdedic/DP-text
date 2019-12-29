@@ -8,6 +8,7 @@
 \boolfalse{printed} % Default
 
 \makeatletter
+\newcommand{\blx@nowarnpolyglossia}{} % Disable biblatex complaining about polyglossia
 \patchcmd{\@chapter}%
 	{\chaptermark{#1}}%
 	{\chaptermark{#1}%
@@ -60,7 +61,6 @@
 
 % BibLaTeX fixes
 \def\UrlBreaks{\do\/\do-}
-\renewbibmacro{labeltitle}{}
 
 \theoremstyle{plain}
 \newtheorem{theorem}{Theorem}[chapter]
