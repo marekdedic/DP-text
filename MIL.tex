@@ -142,7 +142,7 @@ which is defined element-wise as
 \[ \phi_i \left( B \right) = \sum_{x \in B} k \left( x, d_i \right) \quad \text{where} \quad d_i \in \mathspace{D} \]
 where
 \[ k \left( x, d \right) = \begin{cases}
-		e^{- \frac{1}{\sigma^2} \left\lVert x - d \right\rVert^2} &\text{if } d \text{ is the nearest neighbour of } x \text{ in } \mathspace{D} \\
+		\exp \left( - \frac{1}{\sigma^2} \left\lVert x - d \right\rVert^2 \right) &\text{if } d \text{ is the nearest neighbour of } x \text{ in } \mathspace{D} \\
 		0 &\text{otherwise}
 	\end{cases} \]
 The dictionary is populated by a 1-class support vector machine (see \cite{zhu_1-norm_2004}), which, however, has a high computational complexity.

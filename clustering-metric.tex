@@ -20,7 +20,7 @@ Modelling \( p_k \left( x_{t + k} \middle| c_t \right) \) directly using a condi
   f_k \left( x_{t + k}, c_t \right) \propto \frac{p \left( x_{t + k} \middle| c_t \right)}{p \left( x_{t + k} \right)}
 \end{equation}
 A log-bilinear model was used:
-\[ f_k \left( x_{t + k}, c_t \right) = \mathrm{exp} \left( z_{t + k}^T W_k c_t \right) \]
+\[ f_k \left( x_{t + k}, c_t \right) = \exp \left( z_{t + k}^T W_k c_t \right) \]
 
 Both \( g_\mathrm{enc} \) and \( g_\mathrm{ar} \) have been trained to jointly optimize a loss based on the Noise Contrastive Estimation (see \cite{gutmann_noise-contrastive_2010}), which is called \name{InfoNCE} in \cite{oord_representation_2019}. Given a set \( \mathset{X} = \left\{ x_1, \dots, x_N \right\} \) containing one positive sample from \( p \left( x_{t + k} \middle| c_t \right) \) and \( N - 1 \) negative samples from \( p \left( x_{t + k} \right) \), the InfoNCE loss is as follows:
 \[ L_N = - \underset{\mathset{X}}{\mathbb{E}} \left[ \log \frac{f_k \left( x_{t + k}, c_t \right)}{\sum_{x_j \in \mathset{X}} f_k \left( x_j, c_t \right)} \right] \]
@@ -41,7 +41,7 @@ The core idea taken from CPC to clustering is that of the InfoNCE loss. The actu
 \[ B_k^{(1)} \oplus B_k^{(2)} = B_k \in \mathspace{B} \]
 \[ B'_j = \mathrm{srswr} \left( \mathspace{X} \right) \]
 \[ L_\mathrm{CPC} = \log \left\lVert \phi \left( B_k^{(1)} \right) - \phi \left( B_k^{(2)} \right) \right\rVert^2 - \log \sum_{j = 1}^K \left\lVert \phi \left( B_k^{(1)} \right) - \phi \left( B'_j \right) \right\rVert^2 \]
-where \( \oplus \) is the multiset sum (see definition \ref{def:multiset-sum}). The first term of the loss function depicts the notion that the representations of the two parts of the bag should be close to one another. The second term depicts the notion that a random bag should be far from all the bags\footnote{On the off-chance a random bag would be close to \( B_k^{(1)} \), this would be outweighed by the other terms.}. The choice to use the first part of the bag in the second term has no effect as the two parts are chosen randomly. The value \( K \) is a hyper-parameter of this method.
+where \( \oplus \) is the multiset sum (see definition \ref{def:multiset-sum}). The first term of the loss function depicts the notion that the representations of the two parts of the bag should be close to one another. The second term depicts the notion that a random bag should be far from all the bags\footnote{On the off-chance a random bag would be close to \( B_k^{(1)} \), this would be outweighed by the other terms.}. The choice to use the first part of the bag in the second term has no effect as the two parts are chosen randomly. The value \( K \in \mathfield{N} \) is a hyper-parameter of this method.
 
 This method can be further simplified. In order to not have to draw a lot of random bags, it can be reasonably expected that, on average, the representations of two parts of two mismatched bags \( B_{k_1}^{(1)} \) and \( B_{k_2}^{(2)} \) should be far apart. The matrix \( \mathmat{D} \) is constructed as
 \[ \mathmat{D}_{ij} = \left\lVert \phi \left( B_i^{(1)} \right) - \phi \left( B_j^{(2)} \right) \right\rVert_2^2 \]
@@ -94,7 +94,7 @@ The matrix \( \mathmat{y} \) is defined the same way as in the original article:
     0 &\text{for} \quad y_i \neq y_j \\
     1 &\text{for} \quad y_i = y_j \\
   \end{cases} \]
-The matrix \( \mathmat{\eta} \) can be defined similarly:
+This makes triplet loss a supervised method. The matrix \( \mathmat{\eta} \) can be defined similarly:
 \[ \mathmat{\eta}_{ij} = \begin{cases}
     1 &\text{if bag } B_j \text{ is a target neighbour for the bag } B_i \\
     0 &\text{otherwise}
@@ -103,7 +103,7 @@ Next, the pair-wise distance matrix \( \mathmat{D} \) is used, in the same form 
 \[ \mathmat{D}_{ij} = \left\lVert \phi \left( B_i^{(1)} \right) - \phi \left( B_j^{(2)} \right) \right\rVert_2^2 \]
 The loss itself is then expressed as:
 \[ L_\mathrm{triplet} = \sum_{ij} \eta_{ij} D_{ij} + c \sum_{ijl} \eta_{ij} \left( 1 - y_{il} \right) \left\{ D_{il} - D_{ij} \right\}_+ \]
-where \( c \) is a hyper-parameter of the method. Although \cite{weinberger_distance_2006} suggest finding \( \mathmat{\eta} \) as the \( k \)-nearest neighbours of a data point, in this work, the loss has been simplified by setting \( \mathmat{\eta}_{ij} = \mathmat{y}_{ij} \).\todo{Re-check this with kNN?}
+where \( c > 0 \) is a hyper-parameter of the method. Although \cite{weinberger_distance_2006} suggest finding \( \mathmat{\eta} \) as the \( k \)-nearest neighbours of a data point, in this work, the loss has been simplified by setting \( \mathmat{\eta}_{ij} = \mathmat{y}_{ij} \).\todo{Re-check this with kNN?}
 
 \section{Magnet loss}
 Magnet loss is an enhancement of the previously described triplet loss, first introduced by \cite{rippel_metric_2015}. In this section, the original article is first presented, with its application to MIL clustering introduced subsequently.
