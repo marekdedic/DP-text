@@ -104,3 +104,71 @@ Next, the pair-wise distance matrix \( \mathmat{D} \) is used, in the same form 
 The loss itself is then expressed as:
 \[ L_\mathrm{triplet} = \sum_{ij} \eta_{ij} D_{ij} + c \sum_{ijl} \eta_{ij} \left( 1 - y_{il} \right) \left\{ D_{il} - D_{ij} \right\}_+ \]
 where \( c \) is a hyper-parameter of the method. Although \cite{weinberger_distance_2006} suggest finding \( \mathmat{\eta} \) as the \( k \)-nearest neighbours of a data point, in this work, the loss has been simplified by setting \( \mathmat{\eta}_{ij} = \mathmat{y}_{ij} \).\todo{Re-check this with kNN?}
+
+\section{Magnet loss}
+Magnet loss is an enhancement of the previously described triplet loss, first introduced by \cite{rippel_metric_2015}. In this section, the original article is first presented, with its application to MIL clustering introduced subsequently.
+
+\subsection{Original article}
+The idea of magnet loss builds upon triplet loss. In the case of triplet, the loss function essentially goes over all triplets of a data point, its target neighbour and a point from a different class and optimizes their distances (hence the name "triplet loss"). Magnet loss instead maintains an explicit model of the distributions of different classes in the representation space. To capture the distributions, the model uses simple clustering models for each class. In the case of the triplet loss, the target neighborhood is set \textit{a priori} and in the original input space -- but using distances in the original input space is exactly what triplet loss and magnet loss aim to circumvent. To this end, magnet loss uses similarity in the space of representations and updates it periodically. Magnet loss also pursues local separation instead of a global one - representations of different classes should be separated, but can be interleaved. The difference between triplet loss and magnet loss is visualized in figure \ref{fig:triplet-magnet-difference}.
+
+\begin{figure}[h]
+  \centering
+  \begin{subfigure}[b]{0.245\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{images/triplet-magnet-difference/triplet_before.pdf}
+    \caption{Triplet loss: before}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.245\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{images/triplet-magnet-difference/triplet_after.pdf}
+    \caption{Triplet loss: after}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.245\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{images/triplet-magnet-difference/magnet_before.pdf}
+    \caption{Magnet loss: before}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.245\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{images/triplet-magnet-difference/magnet_after.pdf}
+    \caption{Magnet loss: after}
+  \end{subfigure}
+  \caption{Visualization of the difference between triplet loss and magnet loss. While triplet loss only considers one data point at a time, magnet loss operates on a neighbourhood of clusters. Image from \cite{rippel_metric_2015}}\label{fig:triplet-magnet-difference}
+\end{figure}
+
+Let \( \left\{ \left( \mathvec{x}_i, y_i \right) \right\}_{i = 1}^n \) be a training dataset with inputs \( \mathvec{x}_i \in \mathfield{R}^d \) and \( y_i \) being \( C \) discrete class labels. A general parameterized map \( \mathvec{f} \left( \cdot; \Theta \right) \) embeds the inputs into a representation space:
+\[ \mathvec{r}_i = \mathvec{f} \left( \mathvec{x}_i; \Theta \right) \]
+For each class \( c \), \( K \) cluster assignments are obtained by using the K-means++ algorithm (see \cite{macqueen_methods_1967} and \cite{arthur_k-means++:_2007}) where \( K \in \mathfield{N} \) is a hyper-parameter of the method:
+\[ \mathcal{I}_1^c, \dots, \mathcal{I}_K^c = \argmin_{I_1^c, \dots, I_K^c} \sum_{k = 1}^K \sum_{\mathvec{r} \in I_k^c} \left\lVert \mathvec{r} - \frac{1}{\left\lvert I_k^c \right\rvert} \sum_{\mathvec{r} \in I_k^c} \mathvec{r} \right\rVert_2^2  \]
+the centre of each cluster\footnote{\cite{rippel_metric_2015} incorrectly uses \( \mathvec{\mu}_k^c \) as the centre of both \( \mathcal{I}_k^c \) as well as the intermediary cluster \( I_k^c \).} is denoted \( \mathvec{\mu}_k^c \):
+\[ \mathvec{\mu}_k^c = \frac{1}{\left\lvert \mathcal{I}_k^c \right\rvert} \sum_{\mathvec{r} \in \mathcal{I}_k^c} \mathvec{r} \]
+For each input, the center of the cluster in which its representation falls is denoted as
+\[ \mathvec{\mu} \left( \mathvec{r} \right) = \argmin_{\mathvec{\mu_k^c}} \left\lVert \mathvec{r} - \mathvec{\mu}_k^c \right\rVert \]
+and the distance of its representation from the center of the cluster is denoted as
+\[ N_i = \left\lVert \mathvec{r}_i - \mu \left( \mathvec{r}_i \right) \right\rVert_2^2 \]
+The variance of the distance of all the representations from their respective centres can then be calculated as
+\[ \sigma^2 = \frac{1}{n - 1} \sum_{i = 1}^n N_i \]
+For each input, the distance to all the inputs of a different class is calculated as
+\[ M_i = \sum_{c \neq y_i} \sum_{k = 1}^K \exp \left( - \frac{1}{2 \sigma^2} \left\lVert \mathvec{r}_i - \mathvec{\mu}_k^c \right\rVert_2^2 \right) \]
+The magnet loss is then
+\[ L \left( \Theta \right) = \frac{1}{n} \sum_{i = 1}^n \left\{ - \log \frac{\exp \left( - \frac{1}{2 \sigma^2} N_i - \alpha \right)}{M_i} \right\}_+ \]
+where \( \alpha \in \mathfield{R} \) is a hyper-parameter of the method, which has the meaning of the desired cluster separation gap with respect to the variance.
+
+This loss function is made computationally less expensive by only sampling a certain amount of clusters for a class, then sampling a certain amount of inputs in each cluster. The rest of the data then isn't considered.
+
+The cluster index is refreshed periodically between optimization passes. The frequency of the updates is a hyper-parameter of the method, although \cite{rippel_metric_2015} suggest updating it before each optimization pass.
+
+\subsection{Application to MIL}
+The magnet loss is taken almost verbatim from the original article. The simplification by sampling clusters and data points is not used. For posterity, the complete formulation of the method is as follows:
+\[ \mathvec{r}_i = \phi \left( B_i \right) \]
+\[ \mathcal{I}_1^c, \dots, \mathcal{I}_K^c = \argmin_{I_1^c, \dots, I_K^c} \sum_{k = 1}^K \sum_{\mathvec{r} \in I_k^c} \left\lVert \mathvec{r} - \frac{1}{\left\lvert I_k^c \right\rvert} \sum_{\mathvec{r} \in I_k^c} \mathvec{r} \right\rVert_2^2  \]
+\[ \mathvec{\mu}_k^c = \frac{1}{\left\lvert \mathcal{I}_k^c \right\rvert} \sum_{\mathvec{r} \in \mathcal{I}_k^c} \mathvec{r} \]
+\[ \mathvec{\mu} \left( \mathvec{r} \right) = \argmin_{\mathvec{\mu_k^c}} \left\lVert \mathvec{r} - \mathvec{\mu}_k^c \right\rVert \]
+\[ N_i = \left\lVert \mathvec{r}_i - \mu \left( \mathvec{r}_i \right) \right\rVert_2^2 \]
+\[ \sigma^2 = \frac{1}{n - 1} \sum_{i = 1}^n N_i \]
+\[ M_i = \sum_{c \neq y_i} \sum_{k = 1}^K \exp \left( - \frac{1}{2 \sigma^2} \left\lVert \mathvec{r}_i - \mathvec{\mu}_k^c \right\rVert_2^2 \right) \]
+\[ L_\mathrm{magnet} = \frac{1}{n} \sum_{i = 1}^n \left\{ - \log \frac{\exp \left( - \frac{1}{2 \sigma^2} N_i - \alpha \right)}{M_i} \right\}_+ \]
+where \( y_i \) is the class label assigned to the bag \( B_i \) (making magnet loss a supervised method), \( n \) is the number of bags in the dataset and \( K \in \mathfield{N} \) and \( \alpha \in \mathfield{R} \) are hyper-parameters of the method.
