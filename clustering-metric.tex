@@ -34,7 +34,7 @@ The model is illustrated in figure \ref{fig:CPC-paper-model}.
 	\caption{The Contrastive Predictive Coding model. Image from \cite{oord_representation_2019}}\label{fig:CPC-paper-model}
 \end{figure}
 
-\subsection{Application to MIL}
+\subsection{Application to MIL}\label{subsec:CPC-application}
 
 The core idea taken from CPC to clustering is that of the InfoNCE loss. The actual application is based on the following idea. If a bag is split into two parts, it is reasonable to expect that the representations of these two parts would be close to one another. On the other hand, if a random bag were to be drawn from the data (as a simple random sample with replacement), it is reasonable to expect it to be relatively far from any actual bag present in the data. Using these assumptions, the following clustering loss is constructed:
 
@@ -48,3 +48,59 @@ This method can be further simplified. In order to not have to draw a lot of ran
 The distances of the corresponding halves are found on the diagonal of \( \mathmat{D} \), whereas the distances of mismatched halves are in the rest of the matrix. Under this assumptions the final loss for the CPC method is
 \[ L_\mathrm{CPC} = \frac{1}{n} \sum_{i = 1}^n \left( \log \left( D_{ii} \right) - \log \sum_{\substack{j = 1 \\ j \neq i}}^n D_{ij} \right) \]
 where \( n \) is the number of bags.
+
+\section{Triplet loss}
+Triplet loss is a much more direct approach based on \cite{weinberger_distance_2006}. In this section, the original article is first presented, with its application to MIL clustering introduced subsequently.
+
+\subsection{Original article}
+The performance of the \( k \)-nearest neighbour algorithm depends heavily on the distance metric used. Typically, the Euclidean distance is used. However, ideally, the metric would adapt to the problem at hand. \cite{weinberger_distance_2006} present a way to learn a Mahalanobis distance metric for kNN such that it has the \textit{homogeneity} and \textit{separation} properties of clustering.
+
+Let \( \left\{ \left( \mathvec{x}_i, y_i \right) \right\}_{i = 1}^n \) be a training dataset with \( \mathvec{x}_i \in \mathfield{R}^d \) and \( y_i \) discrete class labels. The goal is to learn a linear transformation
+\[ \mathvec{L} : \mathfield{R}^d \to \mathfield{R}^d \]
+This linear transformation is then used to compute squared distances as
+\[ \mathcal{D} \left( \mathvec{x}_i, \mathvec{x}_j \right) = \left\lVert \mathvec{L} \left( \mathvec{x}_i - \mathvec{x}_j \right) \right\rVert_2^2 \]
+
+A helper matrix \( \mathmat{y} \) is used such that
+\[ \mathmat{y}_{ij} = \begin{cases}
+    0 &\text{for} \quad y_i \neq y_j \\
+    1 &\text{for} \quad y_i = y_j \\
+  \end{cases} \]
+In addition to this, for each input \( \mathvec{x}_i \), \( k \) target neighbours are defined that are supposed to be close to \( \mathvec{x}_i \). Euclidean distance may be used to find the target neighbours. A matrix \( \mathmat{\eta} \) is used to indicate target neighbours where \( \mathmat{\eta}_{ij} = 1 \) when \( \mathvec{x}_j \) is a target neighbour of \( \mathvec{x}_i \) and \( 0 \) otherwise.
+
+The cost function features two competing terms. The first term depicts the notion that an input should be close to its target neighbours. The second term depicts the notion that inputs of a different class should be far from one another. The loss is of the form
+\[ \varepsilon \left( \mathvec{L} \right) = \sum_{i, j = 1}^n \mathmat{\eta}_{ij} \left\lVert \mathvec{L} \left( \mathvec{x}_i - \mathvec{x}_j \right) \right\rVert_2^2 + c \sum_{i, j, l = 1}^n \mathmat{\eta}_{ij} \left( 1 - \mathmat{y}_{il} \right) \left\{ \left\lVert \mathvec{L} \left( \mathvec{x}_i - \mathvec{x}_l \right) \right\rVert_2^2 - \left\lVert \mathvec{L} \left( \mathvec{x}_i - \mathvec{x}_j \right) \right\rVert_2^2 \right\}_+ \]
+where \( c > 0 \) is a hyper-parameter of this method and \( \left\{ \cdot \right\}_+ \) is the hinge loss, i.e.
+\[ \left\{ x \right\}_+ = \max \left( 0, 1 - x \right) \]
+
+The loss can be reformulated as an instance of semidefinite programming (see \cite{vandenberghe_semidefinite_1996}). This requires the distance \( \mathcal{D} \) to be reformulated as
+\[ \mathcal{D} \left( \mathvec{x}_i, \mathvec{x}_j \right) = \left( \mathvec{x}_i - \mathvec{x}_j \right)^\top \mathvec{M} \left( \mathvec{x}_i - \mathvec{x}_j \right) \]
+\[ \mathvec{M} = \mathvec{L}^\top \mathvec{L} \]
+This makes it clear that \( \mathcal{D} \) truly is a Mahalanobis distance measure. The hinge loss is replaced by introducing slack variables \( \xi_{ij} \) for all \( i \), \( j \) such that \( \mathmat{y}_{ij} = 0 \). The resulting semidefinite program is: \\
+
+\noindent \textbf{Minimize} \( \displaystyle \sum_{i, j = 1}^n \mathmat{\eta}_{ij} \left( \mathvec{x}_i - \mathvec{x}_j \right)^\top \mathvec{M} \left( \mathvec{x}_i - \mathvec{x}_j \right) + c \sum_{i, j, l = 1}^n \mathmat{\eta}_{ij} \left( 1 - \mathmat{y}_{il} \right) \xi_{ijl} \) \textbf{subject to:}
+\begin{enumerate}[\textbf{(\theenumi)}]
+  \item \( \displaystyle \left( \mathvec{x}_i - \mathvec{x}_l \right)^\top \mathvec{M} \left( \mathvec{x}_i - \mathvec{x}_l \right) - \left( \mathvec{x}_i - \mathvec{x}_j \right)^\top \mathvec{M} \left( \mathvec{x}_i - \mathvec{x}_j \right) \geq 1 - \xi_{ijl} \)
+  \item \( \displaystyle \xi_{ijl} \geq 0 \)
+  \item \( \displaystyle \mathvec{M} \) is positive semidefinite
+\end{enumerate}
+
+While this program can be solved by standard general-purpose solvers, \cite{weinberger_distance_2006} use a custom solver.
+
+\subsection{Application to MIL}
+The idea taken from \cite{weinberger_distance_2006} is the triplet loss itself as the optimisations using semidefinite programming are not of interest for this work.
+
+The matrix \( \mathmat{y} \) is defined the same way as in the original article:
+\[ \mathmat{y}_{ij} = \begin{cases}
+    0 &\text{for} \quad y_i \neq y_j \\
+    1 &\text{for} \quad y_i = y_j \\
+  \end{cases} \]
+The matrix \( \mathmat{\eta} \) can be defined similarly:
+\[ \mathmat{\eta}_{ij} = \begin{cases}
+    1 &\text{if bag } B_j \text{ is a target neighbour for the bag } B_i \\
+    0 &\text{otherwise}
+  \end{cases} \]
+Next, the pair-wise distance matrix \( \mathmat{D} \) is used, in the same form as in section \ref{subsec:CPC-application}:
+\[ \mathmat{D}_{ij} = \left\lVert \phi \left( B_i^{(1)} \right) - \phi \left( B_j^{(2)} \right) \right\rVert_2^2 \]
+The loss itself is then expressed as:
+\[ L_\mathrm{triplet} = \sum_{ij} \eta_{ij} D_{ij} + c \sum_{ijl} \eta_{ij} \left( 1 - y_{il} \right) \left\{ D_{il} - D_{ij} \right\}_+ \]
+where \( c \) is a hyper-parameter of the method. Although \cite{weinberger_distance_2006} suggest finding \( \mathmat{\eta} \) as the \( k \)-nearest neighbours of a data point, in this work, the loss has been simplified by setting \( \mathmat{\eta}_{ij} = \mathmat{y}_{ij} \).\todo{Re-check this with kNN?}
