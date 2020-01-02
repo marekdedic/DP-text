@@ -101,7 +101,7 @@ In this section, there are described the three major approaches to solving multi
 Instance-space paradigm is the original approach proposed by \cite{dietterich_solving_1997}. The existence of labels on the level of instances is presumed, even though such labels aren't known even in the training phase. The goal of this approach is to model the unknown instance-level labelling as \( f : \mathspace{X} \to \mathspace{Y} \) and use it to compute the bag-level label analogically to definition \ref{def:baglabel}, that is
 \[ y_B = \max_{x \in B } \left( f \left( x \right) \right) \]
 
-There are many applications of instance-space paradigm, the most important of which are described next. (Also see \cite{andrews_support_2003} \cite{zhang_multiple_2006})
+There are many applications of instance-space paradigm, the most important of which are described next. (Also see \cite{andrews_support_2002} \cite{zhang_multiple_2006})
 
 \name{BP-MIP}, proposed by \cite{zhou_neural_2002}, is an application of multi-instance learning to binary classification, i.e. \( \mathspace{Y} = \left\{ -1, +1 \right\} \). A feedforward neural network is used, its output for the \( j \)-th instance of the \( i \)-th bag denoted \( o_{ij} \). An instance-level error function is defined as
 \[ E_{ij} = \begin{cases}
@@ -131,7 +131,7 @@ The \( k \)-nearest neighbour algorithm (see \cite{dasarathy_nearest_1991}) is m
 \[ \mathrm{Citers} \left( x, c \right) = \left\{ x_i \middle| \mathrm{Rank} \left( x_i, x \right) \leq c \wedge x_i \in B \right\} \]
 For each bag, the \( r \)-nearest references and the \( c \)-nearest citers are found using the modified Hausdorff distance. If among those there are more positive bags than there are negative ones, the bag is labelled as positive. Otherwise, the bag is labelled as negative.
 
-For more applications using the bag-space paradigm, see \cite{wang_solving_2000}, \cite{kwok_marginalized_2007}, \cite{gartner_multi-instance_2002}, \cite{haussler_convolution_1999}, \cite{zhou_multi-instance_2009} and \cite{muandet_learning_2012}.
+For more applications using the bag-space paradigm, see \cite{wang_solving_2000}, \cite{kwok_marginalized_2007}, \cite{gartner_multi-instance_2002}, \cite{haussler_convolution_1999}, \cite{zhou_multi-instance_2008} and \cite{muandet_learning_2012}.
 
 \subsection{Embedded-space paradigm}\label{sec:embedded-space-paradigm}
 In the embedded space paradigm, labels are only defined on the level of bags, same as in the bag-space paradigm. In order for these bag labels to be learned, an embedding function of the form \( \phi : \mathspace{B} \to \bar{\mathspace{X}} \) must be defined, where \( \bar{\mathspace{X}} \) is a latent space, which may or may not be identical to \( \mathspace{X} \). Using this function, each bag can be represented by an object \( \phi \left( B \right) \in \bar{\mathspace{X}} \), which makes it possible to use any off-the-shelf supervised learning algorithm acting on \( \bar{\mathspace{X}} \). Among the simplest embedding functions are e.g. element-wise minimum, maximum and mean. A more complicated embedding function may for example apply a neural network to each instance of the bag and subsequently pool the instances using one of the aforementioned functions.
