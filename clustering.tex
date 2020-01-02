@@ -37,7 +37,7 @@ Given such clustering-loss function, an actual loss for the embedding model \( \
 \[ L \left( \phi, \mathvec{\theta} \right) = L_C \left( \left\{ \phi \left( B, \mathvec{\theta} \right) \middle| B \in \mathspace{B} \right\} \right) \]
 If the cluster-loss \( L_C \) is chosen correctly, minimizing \( L \) over the learning period will yield a latent space \( \bar{\mathspace{X}} \) in which the bags are already naturally clustered according to the design of the cluster-loss function. Applying any off-the-shelf clustering algorithm on \( \bar{\mathspace{X}} \) will then give good results. How to choose the cluster-loss function \( L_C \) is the focus of chapter \ref{chap:clustering-metric}.
 
-\section{Clustering evaluation metrics}
+\section{Clustering evaluation metrics}\label{sec:clustering-metrics}
 
 \cite{xu_comprehensive_2015} present different clustering evaluation indicators. In this work, several indicators are used. The primary indicators are based on the Silhouette coefficient, the secondary ones on the kNN algorithm (see \cite{dasarathy_nearest_1991}). The indicators are somewhat different to the ones traditionally used in evaluating clustering methods as all the datasets used in this work are originally classification datasets and therefore have classes available. Each class can then be viewed as a cluster target and the learned clustering evaluated against these targets.
 
