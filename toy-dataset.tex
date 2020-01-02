@@ -27,6 +27,10 @@ The embedding \( \phi \) was realised by a MIL neural network consisting of 2 pe
 
 For each of the datasets, 80\% of bags was randomly chosen as the training data, with the rest being testing data. The models were trained using 100 mini-batches of size 50.
 
+\section{Mean model}
+
+In order to provide some baseline against which the models could be compared (as there is no prior art for this problem), a non-machine-learning model was introduced. This model implements the embedding \( \phi \) as an element-wise mean of all instances of a bag.
+
 \section{Method hyper-parameter selection}
 
 Some of the three proposed clustering-losses have some hyper-parameters which need to be tuned. \( L_\mathrm{CPC} \) has no hyper-parameters, \( L_\mathrm{triplet} \) has a single hyper-parameter \( c \), and \( L_\mathrm{magnet} \) has three hyper-parameters, \( K \), \( \alpha \) and the cluster index update frequency. For \( L_\mathrm{triplet} \) and \( L_\mathrm{magnet} \), a range of values was tried for each hyper-parameter in order to select the best configuration for each. The testing was done on the "Musk2" dataset, as it is sufficiently hard and simultaneously the best-known industry standard dataset for MIL.
