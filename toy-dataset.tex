@@ -27,9 +27,13 @@ The embedding \( \phi \) was realised by a MIL neural network consisting of 2 pe
 
 For each of the datasets, 80\% of bags was randomly chosen as the training data, with the rest being testing data. The models were trained using 100 mini-batches of size 50.
 
-\section{Mean model}
+\section{Mean model and classification model}
 
-In order to provide some baseline against which the models could be compared (as there is no prior art for this problem), a non-machine-learning model was introduced. This model implements the embedding \( \phi \) as an element-wise mean of all instances of a bag.
+In order to provide some baseline against which the models could be compared (as there is no prior art for this problem), two other models were introduced.
+
+A non-machine-learning model was introduced as a baseline, which all models should surpass. This model implements the embedding \( \phi \) as an element-wise mean of all instances of a bag.
+
+A classification model has been introduced as a target to beat. This model was realised by a MIL neural network consisting of 2 per-instance layers of 30 neurons, followed by aggregation formed by concatenating element-wise mean and element-wise maximum of all instances in a bag, followed by 2 per-bag layers of 30 neurons and a final layer of 2 output neurons. All the neurons used the ReLU activation function, except for the output neurons which used identity as their activation function. Layer weights were initialized using Glorot initialization, bias vectors were initialized to zeros. ADAM was used as the optimization method optimizing the cross-entropy loss.
 
 \section{Method hyper-parameter selection}
 
@@ -50,4 +54,4 @@ For \( L_\mathrm{triplet} \), the values \( c \in \left\{ 0.01, 0.1, 1, 10, 100 
   \caption{The accuracy of a kNN classifier built on the embedding over the learning period.}\label{fig:triplet-gridsearch-accuracy}
 \end{figure}
 
-As can be seen from the figures, for low values of \( c \), the performance is not good and, more importantly, isn't increasing over the learning period. In the end, the value \( c = 1 \) has been selected as it offers good performance and some of the higher values show some instability in the learning process.
+As can be seen from the figures, for low values of \( c \), the performance is not good and, more importantly, isn't increasing over the learning period. In the end, the value \( c = 1 \) has been selected as it offers good performance and the higher values show some instability in the learning process.
