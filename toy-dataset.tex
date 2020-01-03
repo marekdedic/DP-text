@@ -61,14 +61,30 @@ For \( L_\mathrm{magnet} \), the values \( K \in \left\{ 2, 3, 5, 8, 16, 20 \rig
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=\textwidth]{images/magnet-gridsearch/ratio/K/magnet-gridsearch-ratio-K.pdf}
+  \includegraphics[width=0.93\textwidth]{images/magnet-gridsearch/ratio/K/magnet-gridsearch-ratio-K.pdf}
   \caption{The value of \( \mathrm{ratio} \left( \cdot \right) \) over the learning period for different values of \( K \), \( \alpha \) and the cluster index update frequency. Each subplot corresponds to a particular \( \alpha \) and the cluster index update frequency. The series in each subplot correspond to a value of \( K \).}\label{fig:magnet-gridsearch-ratio}
 \end{figure}
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=\textwidth]{images/magnet-gridsearch/accuracy/K/magnet-gridsearch-accuracy-K.pdf}
-  \caption{The accuracy of a kNN classifier built on the embedding over the learning period for different values of \( K \), \( \alpha \) and the cluster index update frequency. Each subplot corresponds to a particular \( \alpha \) and the cluster index update frequency. The series in each subplot correspond to a value of \( K \).}\label{fig:magnet-gridsearch-ratio}
+  \includegraphics[width=0.93\textwidth]{images/magnet-gridsearch/accuracy/K/magnet-gridsearch-accuracy-K.pdf}
+  \caption{The accuracy of a kNN classifier built on the embedding over the learning period for different values of \( K \), \( \alpha \) and the cluster index update frequency. Each subplot corresponds to a particular \( \alpha \) and the cluster index update frequency. The series in each subplot correspond to a value of \( K \).}\label{fig:magnet-gridsearch-accuracy}
 \end{figure}
 
-As can be seen from the figures, the value of \( K \) doesn't affect the performance, therefore \( K = 2 \) was chosen due to its lowest computational complexity. For the values of \( \alpha \), the lower values offer better performance, with the values \( 0 \) and \( 0.1 \) being practically indistinguishable. Therefore \( \alpha = 0 \) was chosen. The cluster index update frequency offers no practical change in performance for values up to \( 25 \), with higher values having a negative impact. Therefore, due to computational constraints, the value of \( 25 \) was chosen.
+As can be seen from the figures, the value of \( K \) doesn't affect the performance, therefore \( K = 2 \) was chosen due to its lowest computational complexity. For the values of \( \alpha \), the lower values offer better performance, with the values \( 0 \) and \( 0.1 \) being practically indistinguishable. Therefore \( \alpha = 0 \) was chosen. The cluster index update frequency offers no practical change in performance for values up to \( 25 \), with higher values having a negative impact. Therefore, due to computational constraints, the value of \( 25 \) was chosen. The selected hyper-parameter configuration is compared to the mean model and the classification model in figure \ref{fig:magnet-baseline}.
+
+\begin{figure}[h]
+  \centering
+  \begin{subfigure}[b]{0.49\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{images/magnet-baseline/ratio/magnet-baseline-ratio.pdf}
+    \caption{The value of \( \mathrm{ratio} \left( \cdot \right) \) over the learning period.}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.49\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{images/magnet-baseline/accuracy/magnet-baseline-accuracy.pdf}
+    \caption{The accuracy of a kNN classifier built on the embedding over the learning period.}
+  \end{subfigure}
+  \caption{Comparison of the selected hyper-parameter configuration for magnet loss to the mean model and the classification model.}\label{fig:magnet-baseline}
+\end{figure}
