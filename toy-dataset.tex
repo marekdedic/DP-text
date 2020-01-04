@@ -125,7 +125,7 @@ Figure \ref{fig:triplet-toy-ratio} shows the value of \( \mathrm{ratio} \left( \
 \begin{figure}[h]
   \centering
   \includegraphics[width=\textwidth]{images/triplet-toy/ratio/triplet-toy-ratio.pdf}
-  \caption{The value of \( \mathrm{ratio} \left( \cdot \right) \) for triplet loss over the learning period.}\label{fig:triplet-toy-ratio}
+  \caption{The value of \( \mathrm{ratio} \left( \cdot \right) \) for triplet loss over the learning period. Note the logarithmic scale on the \( y \) axis.}\label{fig:triplet-toy-ratio}
 \end{figure}
 
 \begin{figure}[h]
@@ -138,4 +138,28 @@ Figure \ref{fig:triplet-toy-ratio} shows the value of \( \mathrm{ratio} \left( \
   \centering
   \includegraphics[width=\textwidth]{images/triplet-toy/kNN/triplet-toy-kNN.pdf}
   \caption{The accuracy of a kNN classifier built on the final embedding for triplet loss as a function of the number of samples used to seed it.}\label{fig:triplet-toy-kNN}
+\end{figure}
+
+\todo{Magnet}
+\todo{kNN being average of 3}
+\todo{Compare}
+
+\section{Magnet loss with self-tuning spectral clustering}
+
+Figure \ref{fig:magnet-spectral} presents the difference between using K-means and self-tuning spectral clustering as the inner clustering algorithm in magnet loss. \todo{Compare}
+
+\begin{figure}[h]
+  \centering
+  \begin{subfigure}[b]{0.49\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{images/magnet-spectral/ratio/magnet-spectral-ratio.pdf}
+    \caption{The value of \( \mathrm{ratio} \left( \cdot \right) \) over the learning period.}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.49\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{images/magnet-spectral/accuracy/magnet-spectral-accuracy.pdf}
+    \caption{The accuracy of a kNN classifier built on the embedding over the learning period.}
+  \end{subfigure}
+  \caption{Comparison of the inner clustering algorithms for magnet loss.}\label{fig:magnet-spectral}
 \end{figure}
