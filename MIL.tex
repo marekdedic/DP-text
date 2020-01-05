@@ -1,14 +1,14 @@
-\chapter{An algebraic formalism for Multi-instance learning}\label{chap:MIL}
-
-\todo{cite the TIFS paper?}
+\chapter{An overview of Multi-instance learning}\label{chap:MIL}
 
 \name{Multi-instance learning} is an approach to machine learning first described by \cite{dietterich_solving_1997}. In its original form, multi-instance learning (often referred to just as \name{MIL}) was used for \name{supervised learning}, that is to solve problems for which there is already a dataset of known examples and solutions at the ready. An example of that is in the work \cite{amores_multiple_2013}. The other class of problems solved is \name{unsupervised learning}, where no solutions are available in the training phase. Among these is for example \cite{chen_contextual_2012}.
 
 The multi-instance learning paradigm is a type of representation learning on structured data. While classical machine learning algorithms typically operate on samples represented by a vector of numbers each, MIL relaxes this requirement by representing a sample as a \name{bag} of an arbitrary number of objects. This bag is then treated as one sample -- e.g. in classification, there is a label for the whole bag.
 
-In this chapter, a formalism for describing multi-instance learning in the context of classification is presented, largely consisting of a translation of \cite{dedic_hierarchicke_2017}, where the formalism was first introduced. Then, a review of methods for MIL is presented.
+In this chapter, two formalisms for describing multi-instance learning in the context of classification are presented. The algebraic formalism largely consisting of a translation of \cite{dedic_hierarchicke_2017}, where it was first introduced. The stochastic formalism build upon the ideas from \cite{muandet_learning_2012}. Finally, a review of methods for MIL is presented.
 
 \section{Multisets}
+
+In order to properly describe multi-instance learning using the algebraic formalism, a few uncommon definitions are needed.
 
 A multiset is a set allowing repeated elements. Alternatively, it can be seen as an unordered tuple. \cite{knuth_art_1968} formally defines the concept as follows:
 
@@ -63,7 +63,7 @@ The summation of two multisets can be easily defined as follows.
 		\end{cases} \]
 \end{define}
 
-\section{Multi-instance learning}
+\section{An algebraic formalism for multi-instance learning}
 Multi-instance learning (see \cite{dietterich_solving_1997}) in its original form is an approach to representing and solving problems where there exist samples from an input space \( \mathspace{X} \) and their corresponding targets from an output space \( \mathspace{Y} \) (whose elements are often called labels or classes) and the goal is to find a mapping of input objects to output objects which correctly predicts the targets on the data. Unlike classical supervised learning, there is no known solution consisting of pairs of input and output objects. Instead, the input objects are grouped together into so-called bags, which are defined as follows:
 
 \begin{define}
@@ -93,6 +93,24 @@ In this example, the keys (or, more precisely their descriptions by feature vect
 \end{define}
 
 As will later be shown in sections \ref{sec:bag-space-paradigm} and \ref{sec:embedded-space-paradigm}, this isn't the only interpretation of multi-instance learning. There are problems where the instance-level labels are not only no known, but even not well-defined as the bag isn't seen as a mere collection of objects but as a distinct object of its own.
+
+\section{A stochastic formalism for multi-instance learning}
+An alternative formalism for multi-instance learning was first introduced in \cite{pevny_using_2017}. This formalism builds on the previous work \cite{muandet_learning_2012}, which presents the following formalism for learning from distributions:
+
+Let for the input space \( \mathspace{X} \) exist a measurable space \( \left( \mathspace{X}, \mathspace{A} \right) \), where \( \mathspace{A} \) is a \( \sigma \)-algebra of \( \mathspace{X} \). Let \( \mathcal{P}^\mathspace{X} \) denote the set of all probability measures on \( \left( \mathspace{X}, \mathspace{A} \right) \). The goal of is to learn a function \( h : \mathcal{P}^{\mathspace{X}} \to \mathspace{Y} \) from a set of example pairs \( \left\{ \left( P_i, y_i \right) \right\} \) where \( P_i \in \mathcal{P}^\mathspace{X} \) and \( y_i \in \mathspace{Y} \). In order to be able to efficiently learn from distributions, an embedding of the distribution as a mean function \( \mu \) is introduced. Let \( \mathspace{H} \) be a reproducing kernel Hilbert space of functions \( f : \mathspace{X} \to \mathfield{R} \) with a reproducing kernel \( k : \mathspace{X} \times \mathspace{X} \to \mathfield{R} \). The mean map \( \mu : \mathcal{P}^\mathspace{X} \to \mathspace{H} \) is defined as
+\[ \mu \left( P \right) = \int_\mathspace{X} k \left( x, \cdot \right) \mathrm{d}P \left( x \right) \]
+Let \( \mu_P = \mu \left( P \right) \) for all \( P \in \mathcal{P}^\mathspace{X} \). Then
+\[ \mathbb{E}_P \left[ f \right] = \Braket{\mu_p, f}_\mathspace{H} \]
+
+Given \( m \) training samples of the form \( \left( P_i, y_i \right) \in \mathcal{P}^\mathspace{X} \times \mathfield{R} \) and a loss function \( L : \left( \mathcal{P}^\mathspace{X} \times \mathfield{R}^2 \right)^m \to \mathfield{R} \cup \left\{ +\infty \right\} \), the goal can be formulated as the task of finding a \( f \in \mathspace{H} \) minimizing the risk functional
+\[ L \left( P_1, y_1, \mathbb{E}_{P_1} \left[ f \right], \dots, P_m, y_m, \mathbb{E}_{P_m} \left[ f \right] \right) \]
+
+Given this general formalism, the extension to multi-instance learning is fairly straightforward. A bag \( B \) is viewed as a set of realizations of a particular probability distribution \( P \in \mathcal{P}^\mathspace{X} \), that is
+\[ B = \left\{ x_i \middle| x_i \sim P, i \in \left\{ 1, \dots, m \right\}, m \in \mathfield{N} \right\} \]
+A core assumption of this formalism is that \( P = P \left( P_B, y_B \right) \) where \( P_B \) is the probability distribution of instances in the bag \( B \) and \( y_B \) is the label assigned to \( B \). That is, the probability distribution of the bag is dependent on its assigned label.
+
+In order to define a kernel function on bags (which will be needed in section \ref{sec:bag-space-paradigm}), the mean map \( \mu \) is associated with the kernel \( K : \mathcal{P}^\mathspace{X} \times \mathcal{P}^\mathspace{X} \to \mathfield{R} \) defined as
+\[ K \left( P, Q \right) = \Braket{\mu_P, \mu_Q}_\mathspace{H} = \int_\mathspace{X} \int_\mathspace{X} k \left( x, y \right) \mathrm{d}P \left( x \right) \mathrm{d}Q \left( y \right) \]
 
 \section{Approaches to solving multi-instance problems}
 In this section, there are described the three major approaches to solving multi-instance classification problems. The section is sourced primarily from \cite{pevny_using_2017} and \cite{pevny_discriminative_2016}.
