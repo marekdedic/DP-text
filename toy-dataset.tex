@@ -141,7 +141,24 @@ Figure \ref{fig:triplet-toy-ratio} shows the value of \( \mathrm{ratio} \left( \
 \end{figure}
 
 Figure \ref{fig:magnet-toy-ratio} shows the value of \( \mathrm{ratio} \left( \cdot \right) \) for magnet loss over the learning period. Figures \ref{fig:magnet-toy-accuracy} and \ref{fig:magnet-toy-kNN} show the accuracy of a kNN model built on the embedding.
-\todo{Magnet figures}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\textwidth]{images/magnet-toy/ratio/magnet-toy-ratio.pdf}
+  \caption{The value of \( \mathrm{ratio} \left( \cdot \right) \) for magnet loss over the learning period. Note the logarithmic scale on the \( y \) axis.}\label{fig:magnet-toy-ratio}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\textwidth]{images/magnet-toy/accuracy/magnet-toy-accuracy.pdf}
+  \caption{The accuracy of a kNN classifier built on the embedding for magnet loss over the learning period.}\label{fig:magnet-toy-accuracy}
+\end{figure}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=\textwidth]{images/magnet-toy/kNN/magnet-toy-kNN.pdf}
+  \caption{The accuracy of a kNN classifier built on the final embedding for magnet loss as a function of the number of samples used to seed it. Average of three runs.}\label{fig:magnet-toy-kNN}
+\end{figure}
 
 \todo{Compare the methods}
 
