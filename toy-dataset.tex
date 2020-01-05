@@ -33,7 +33,7 @@ In order to provide some baseline against which the models could be compared (as
 
 A non-machine-learning model was introduced as a baseline, which all models should surpass. This model implements the embedding \( \phi \) as an element-wise mean of all instances of a bag.
 
-A classification model has been introduced as a target to beat. This model was realised by a MIL neural network consisting of 2 per-instance layers of 30 neurons, followed by aggregation formed by concatenating element-wise mean and element-wise maximum of all instances in a bag, followed by 2 per-bag layers of 30 neurons and a final layer of 2 output neurons. All the neurons used the ReLU activation function, except for the output neurons which used identity as their activation function. Layer weights were initialized using Glorot initialization, bias vectors were initialized to zeros. ADAM was used as the optimization method optimizing the cross-entropy loss.
+A classification model has been introduced as a target to beat. This model was realised by a MIL neural network consisting of 2 per-instance layers of 30 neurons, followed by aggregation formed by concatenating element-wise mean and element-wise maximum of all instances in a bag, followed by 2 per-bag layers of 30 neurons and a final layer of 2 output neurons. All the neurons used the ReLU activation function, except for the output neurons which used identity as their activation function. Layer weights were initialized using Glorot initialization, bias vectors were initialized to zeros. ADAM was used as the optimization method optimizing the cross-entropy loss. The accuracy of the model has been evaluated by selecting the optimal threshold on its output.
 
 \section{Method hyper-parameter selection}
 
@@ -117,7 +117,7 @@ Figure \ref{fig:CPC-toy-ratio} shows the value of \( \mathrm{ratio} \left( \cdot
 \begin{figure}[h]
   \centering
   \includegraphics[width=\textwidth]{images/CPC-toy/kNN/CPC-toy-kNN.pdf}
-  \caption{The accuracy of a kNN classifier built on the final embedding for \( L_\mathrm{CPC} \) as a function of the number of samples used to seed it.}\label{fig:CPC-toy-kNN}
+  \caption{The accuracy of a kNN classifier built on the final embedding for \( L_\mathrm{CPC} \) as a function of the number of samples used to seed it. Average of three runs.}\label{fig:CPC-toy-kNN}
 \end{figure}
 
 Figure \ref{fig:triplet-toy-ratio} shows the value of \( \mathrm{ratio} \left( \cdot \right) \) for triplet loss over the learning period. Figures \ref{fig:triplet-toy-accuracy} and \ref{fig:triplet-toy-kNN} show the accuracy of a kNN model built on the embedding.
@@ -137,16 +137,17 @@ Figure \ref{fig:triplet-toy-ratio} shows the value of \( \mathrm{ratio} \left( \
 \begin{figure}[h]
   \centering
   \includegraphics[width=\textwidth]{images/triplet-toy/kNN/triplet-toy-kNN.pdf}
-  \caption{The accuracy of a kNN classifier built on the final embedding for triplet loss as a function of the number of samples used to seed it.}\label{fig:triplet-toy-kNN}
+  \caption{The accuracy of a kNN classifier built on the final embedding for triplet loss as a function of the number of samples used to seed it. Average of three runs.}\label{fig:triplet-toy-kNN}
 \end{figure}
 
-\todo{Magnet}
-\todo{kNN being average of 3}
-\todo{Compare}
+Figure \ref{fig:magnet-toy-ratio} shows the value of \( \mathrm{ratio} \left( \cdot \right) \) for magnet loss over the learning period. Figures \ref{fig:magnet-toy-accuracy} and \ref{fig:magnet-toy-kNN} show the accuracy of a kNN model built on the embedding.
+\todo{Magnet figures}
+
+\todo{Compare the methods}
 
 \section{Magnet loss with self-tuning spectral clustering}
 
-Figure \ref{fig:magnet-spectral} presents the difference between using K-means and self-tuning spectral clustering as the inner clustering algorithm in magnet loss. \todo{Compare}
+Figure \ref{fig:magnet-spectral} presents the difference between using K-means and self-tuning spectral clustering as the inner clustering algorithm in magnet loss.
 
 \begin{figure}[h]
   \centering
@@ -163,3 +164,5 @@ Figure \ref{fig:magnet-spectral} presents the difference between using K-means a
   \end{subfigure}
   \caption{Comparison of the inner clustering algorithms for magnet loss.}\label{fig:magnet-spectral}
 \end{figure}
+
+As can be seen from the figures, the use of self-tuning spectral clustering brings no clear benefit to the performance of this method. The accuracy is lower then when the K-means algorithm was used, this can, however, be attributed to the instability of the method as a whole and may differ between runs.
