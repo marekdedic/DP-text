@@ -165,4 +165,14 @@ where
 	\end{cases} \]
 The dictionary is populated by a 1-class support vector machine (see \cite{zhu_1-norm_2004}), which, however, has a high computational complexity.
 
-For more applications using the embedded-space paradigm, see \cite{cheplygina_multiple_2015}, \cite{chen_image_2004} \cite{foulds_learning_2008}, \cite{zhang_multi-instance_2009} and \cite{dedic_hierarchicke_2017}.
+\cite{pevny_nested_2020} and \cite{dedic_hierarchicke_2017} present an approach to learning to classify HTTP traffic by utilizing sets of URLs. The structure of the data is highly exploited using the embedded-space paradigm. The approach is innovative in that it uses multiple layers of MIL nested in each other -- that is the instances of a bag do not necessarily need to be feature vectors, but can be bag in themselves. The HTTP traffic of a particular client is therefore represented as a bag of all second-level domains the client has exchanged datagrams with. Each second-level domain is then represented as a bag of individual URLs which the client has connected to. Individual URLs are then split into 3 part, domain, path and query, and each part is represented as a bag of tokens, which can then be broken down eve further. The model is shown in figure \ref{fig:HTTP-paper}. In the end, the model consists of 5 nested MIL problems.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\textwidth]{images/HTTP-paper/HTTP-paper.pdf}
+	\caption{Hierarchical model of the network traffic of a single computer. The computer is modelled by a set of remote servers and each remote server is modelled by a set of messages (connections) from the given computer to it. Figure from \cite{pevny_nested_2020}.}\label{fig:HTTP-paper}
+\end{figure}
+
+An added benefit of MIL is also in its relatively easy explainability and interpretability. \cite{pevny_nested_2020} present a way to extract indicators of compromise and explain the decision using the learned MIL model.
+
+For more applications using the embedded-space paradigm, see \cite{cheplygina_multiple_2015}, \cite{chen_image_2004} \cite{foulds_learning_2008} and \cite{zhang_multi-instance_2009}.
