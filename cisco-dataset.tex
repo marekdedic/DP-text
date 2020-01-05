@@ -1,1 +1,28 @@
-\chapter{cisco-dataset}\label{chap:cisco-dataset}
+\chapter{Evaluation on a corporate dataset}\label{chap:cisco-dataset}
+
+The tree methods were finally evaluated on a corporate dataset in the domain of computer security.
+
+\section{The used dataset}
+
+The models were evaluated on a proprietary dataset provided by Cisco Cognitive Intelligence, consisting of records of network connections from clients (e.g. user computers or mobile devices) to some on-line services. The dataset represents HTTP traffic of more than 100 companies. Two datasets were collected, each spanning 1 day of traffic. The training data was traffic from 2019-11-18, while the data used for testing was collected the following day, 2019-11-19.
+
+The dataset contained the following information for each connection:
+\begin{enumerate}
+  \item The duration of the connection, that is the difference between the time of the first and the last recorded datagram
+  \item The client port number
+  \item The IANA assigned internet protocol number
+  \item The server port number
+  \item The number of bytes sent from the client to the server
+  \item The number of bytes sent from the server to the client
+  \item The number of packets sent from the client to the server
+  \item The number of packets sent from the server to the client
+  \item The number of individual TCP connections
+  \item The number of SYN packets sent from the client to the server
+  \item The number of SYN-ACK packets sent from the server to the client
+  \item The number of RST packets sent from the client to the server
+  \item The number of RST packets sent from the server to the client
+  \item The number of FIN packets sent from the client to the server
+  \item The number of FIN packets sent from the server to the client
+\end{enumerate}
+
+In addition to that, each connection contains the URL the client is connecting to. \cite{pevny_nested_2020}
