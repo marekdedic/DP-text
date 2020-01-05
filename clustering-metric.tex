@@ -1,12 +1,12 @@
 \chapter{Learning a metric for clustering}\label{chap:clustering-metric}
 In section \ref{sec:mil-clustering}, a method for learning a representation \( \phi \) was shown. In order to learn the parameters of the representation, a clustering-loss function is required in the form
 \[ L_C : \mathcal{P}^M \left( \bar{\mathspace{X}} \right) \to \mathfield{R} \]
-In this chapter, several ways of constructing such a clustering-loss function are explored.
+In this chapter, three ways of constructing such a clustering-loss function are explored.
 
 \section{Contrastive predictive coding}
 Contrastive predictive coding is a technique first introduced by \cite{oord_representation_2019}. In this section, the original article is first presented, with its application to MIL clustering introduced subsequently.
 
-\subsection{Original article}
+\subsection{Original method}
 \name{Contrastive predictive coding} (also referred to as \name{CPC}) builds the model on the ideas from predictive coding (see \cite{elias_predictive_1955}), a technique from information theory. In predictive coding, a sequence of messages is transmitted. Both the transmitter and the receiver try to predict future messages from all the past ones. Only the difference between the predicted and actual message is then actually transmitted.
 
 CPC is an approach to representing time series by modelling future data from the past. In order to do that, the model learns high-level representations of the data and discards noise in the data. The further in future the model predicts, the less shared information is available and thus the global structure needs to be inferred better.
@@ -36,14 +36,15 @@ The model is illustrated in figure \ref{fig:CPC-paper-model}.
 
 \subsection{Application to MIL}\label{subsec:CPC-application}
 
-The core idea taken from CPC to clustering is that of the InfoNCE loss. The actual application is based on the following idea. If a bag is split into two parts, it is reasonable to expect that the representations of these two parts would be close to one another. On the other hand, if a random bag were to be drawn from the data (as a simple random sample with replacement), it is reasonable to expect it to be relatively far from any actual bag present in the data. Using these assumptions, the following clustering loss is constructed:
+The core idea taken from CPC to this work is that of the InfoNCE loss. The actual application is based on the following idea. If a bag is split into two parts, it is reasonable to expect that the representations of these two parts would be close to one another. On the other hand, if a random bag were to be drawn from the data (as a simple random sample with replacement), it is reasonable to expect it to be relatively far from any actual bag present in the data. Using these assumptions, the following clustering loss is constructed:
+
 
 \[ B_k^{(1)} \oplus B_k^{(2)} = B_k \in \mathspace{B} \]
 \[ B'_j = \mathrm{srswr} \left( \mathspace{X} \right) \]
 \[ L_\mathrm{CPC} = \log \left\lVert \phi \left( B_k^{(1)} \right) - \phi \left( B_k^{(2)} \right) \right\rVert^2 - \log \sum_{j = 1}^K \left\lVert \phi \left( B_k^{(1)} \right) - \phi \left( B'_j \right) \right\rVert^2 \]
 where \( \oplus \) is the multiset sum (see definition \ref{def:multiset-sum}). The first term of the loss function depicts the notion that the representations of the two parts of the bag should be close to one another. The second term depicts the notion that a random bag should be far from all the bags\footnote{On the off-chance a random bag would be close to \( B_k^{(1)} \), this would be outweighed by the other terms.}. Choosing to only use the first part of the bag in the second term has no effect as the two parts are chosen randomly. The value \( K \in \mathfield{N} \) is a hyper-parameter of this method.
 
-This method can be further simplified. In order to not have to draw a lot of random bags, it can be reasonably expected that, on average, the representations of two parts of two mismatched bags \( B_{k_1}^{(1)} \) and \( B_{k_2}^{(2)} \) should be far apart. The matrix \( \mathmat{D} \) is constructed as
+This method can be further modified to make it less computationally complex. In order to not have to draw a lot of random bags, it can be reasonably expected that, on average, the representations of two parts of two mismatched bags \( B_{k_1}^{(1)} \) and \( B_{k_2}^{(2)} \) should be far apart. The matrix \( \mathmat{D} \) is constructed as
 \[ \mathmat{D}_{ij} = \left\lVert \phi \left( B_i^{(1)} \right) - \phi \left( B_j^{(2)} \right) \right\rVert_2^2 \]
 The distances of the corresponding halves are found on the diagonal of \( \mathmat{D} \), whereas the distances of mismatched halves are in the rest of the matrix. Under this assumption the final loss for the CPC method is
 \[ L_\mathrm{CPC} = \frac{1}{n} \sum_{i = 1}^n \left( \log \left( \mathmat{D}_{ii} \right) - \log \sum_{\substack{j = 1 \\ j \neq i}}^n \mathmat{D}_{ij} \right) \]
@@ -52,7 +53,7 @@ where \( n \) is the number of bags.
 \section{Triplet loss}
 Triplet loss is a much more direct approach based on \cite{weinberger_distance_2006}. In this section, the original article is first presented, with its application to MIL clustering introduced subsequently.
 
-\subsection{Original article}
+\subsection{Original method}
 The performance of the \( k \)-nearest neighbour algorithm depends heavily on the distance metric used. Typically, the Euclidean distance is used. However, ideally, the metric would adapt to the problem at hand. \cite{weinberger_distance_2006} present a way to learn a Mahalanobis distance metric for kNN such that it has the \textit{homogeneity} and \textit{separation} properties of clustering.
 
 Let \( \left\{ \left( \mathvec{x}_i, y_i \right) \right\}_{i = 1}^n \) be a training dataset with \( \mathvec{x}_i \in \mathfield{R}^d \) and \( y_i \) discrete class labels. The goal is to learn a linear transformation
@@ -108,7 +109,7 @@ where \( c > 0 \) is a hyper-parameter of the method. Although \cite{weinberger_
 \section{Magnet loss}
 Magnet loss is an enhancement of the previously described triplet loss, first introduced by \cite{rippel_metric_2015}. In this section, the original article is first presented, with its application to MIL clustering introduced subsequently.
 
-\subsection{Original article}
+\subsection{Original method}
 The idea of magnet loss builds upon triplet loss. In the case of triplet, the loss function essentially goes over all triplets of a data point, its target neighbour and a point from a different class and optimizes their distances (hence the name "triplet loss"). Magnet loss instead maintains an explicit model of the distributions of different classes in the representation space. To capture the distributions, the model uses simple clustering models for each class. In the case of the triplet loss, the target neighbourhood is set \textit{a priori} and in the original input space -- but using distances in the original input space is exactly what triplet loss and magnet loss aim to circumvent. To this end, magnet loss uses similarity in the space of representations and updates it periodically. Magnet loss also pursues local separation instead of a global one -- representations of different classes should be separated, but can be interleaved. The difference between triplet loss and magnet loss is visualized in figure \ref{fig:triplet-magnet-difference}.
 
 \begin{figure}[h]

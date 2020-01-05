@@ -71,7 +71,7 @@ For \( L_\mathrm{magnet} \), the values \( K \in \left\{ 2, 3, 5, 8, 16, 20 \rig
   \caption{The accuracy of a kNN classifier built on the embedding over the learning period for different values of \( K \), \( \alpha \) and the cluster index update frequency. Each subplot corresponds to a particular \( \alpha \) and the cluster index update frequency. The series in each subplot correspond to a value of \( K \).}\label{fig:magnet-gridsearch-accuracy}
 \end{figure}
 
-As can be seen from the figures, the value of \( K \) doesn't affect the performance, therefore \( K = 2 \) was chosen due to its lowest computational complexity. For the values of \( \alpha \), the lower values offer better performance, with the values \( 0 \) and \( 0.1 \) being practically indistinguishable. Therefore \( \alpha = 0 \) was chosen. The cluster index update frequency offers no practical change in performance for values up to \( 25 \), with higher values having a negative impact. Therefore, due to computational constraints, the value of \( 25 \) was chosen. The selected hyper-parameter configuration is compared to the mean model and the classification model in figure \ref{fig:magnet-baseline}.
+As can be seen from the figures, the value of \( K \) doesn't affect the performance, therefore \( K = 2 \) was chosen due to its lowest computational complexity. For the values of \( \alpha \), the lower values offer better performance, with the values \( 0 \) and \( 0.1 \) being practically indistinguishable. Therefore \( \alpha = 0 \) was chosen. The cluster index update frequency offers no practical change in performance for values up to \( 25 \), with higher values having a negative impact. Therefore, due to computational constraints, the value of \( 25 \) was chosen. The selected hyper-parameter configuration is compared to the mean model and the classification model on the "Musk2" dataset in figure \ref{fig:magnet-baseline}.
 
 \begin{figure}[h]
   \centering
@@ -160,7 +160,9 @@ Figure \ref{fig:magnet-toy-ratio} shows the value of \( \mathrm{ratio} \left( \c
   \caption{The accuracy of a kNN classifier built on the final embedding for magnet loss as a function of the number of samples used to seed it. Average of three runs.}\label{fig:magnet-toy-kNN}
 \end{figure}
 
-\todo{Compare the methods}
+As can be seen from the figures, triplet loss is the clear winner among these 3 approaches as it is the only one which improves the metrics over the learning period. The other two methods show no clear improvement. With that said, however, the performance varies wildly between datasets. On the "Web" datasets, the value of \( \mathrm{ratio} \left( \cdot \right) \) quickly increases, but the accuracy of the kNN classifier remains fairly constant. This suggests that the embedding is quickly separating the different classes, but it does so in such a way that the kNN algorithm is not able to utilize this separation. This suggests that kNN might not be the right clustering algorithm for this application.
+
+Looking at the dependency of the accuracy on the size of the kNN seed data, some datasets clearly stand out as particularly hard for all of the methods (e.g. "Mutagenesis2"), while other have good results for all methods (e.g. "BrownCreeper"). Again, triplet loss is the clear winner as on most datasets it reaches its peak performance only with small amount of seed data.
 
 \section{Magnet loss with self-tuning spectral clustering}
 
