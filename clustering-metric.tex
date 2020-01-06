@@ -78,7 +78,8 @@ The loss can be reformulated as an instance of semidefinite programming (see \ci
 \[ \mathvec{M} = \mathvec{L}^\top \mathvec{L} \]
 This makes it clear that \( \mathcal{D} \) truly is a Mahalanobis distance measure. The hinge loss is replaced by introducing slack variables \( \xi_{ij} \) for all \( i \), \( j \) such that \( \mathmat{y}_{ij} = 0 \). The resulting semidefinite program is: \\
 
-\noindent \textbf{Minimize} \( \displaystyle \sum_{i, j = 1}^n \mathmat{\eta}_{ij} \left( \mathvec{x}_i - \mathvec{x}_j \right)^\top \mathvec{M} \left( \mathvec{x}_i - \mathvec{x}_j \right) + c \sum_{i, j, l = 1}^n \mathmat{\eta}_{ij} \left( 1 - \mathmat{y}_{il} \right) \xi_{ijl} \) \textbf{subject to:}
+\noindent \textbf{Minimize} \( \displaystyle \sum_{i, j = 1}^n \mathmat{\eta}_{ij} \left( \mathvec{x}_i - \mathvec{x}_j \right)^\top \mathvec{M} \left( \mathvec{x}_i - \mathvec{x}_j \right) + c \sum_{i, j, l = 1}^n \mathmat{\eta}_{ij} \left( 1 - \mathmat{y}_{il} \right) \xi_{ijl} \) \\
+\textbf{Subject to:}
 \begin{enumerate}[\textbf{(\theenumi)}]
   \item \( \displaystyle \left( \mathvec{x}_i - \mathvec{x}_l \right)^\top \mathvec{M} \left( \mathvec{x}_i - \mathvec{x}_l \right) - \left( \mathvec{x}_i - \mathvec{x}_j \right)^\top \mathvec{M} \left( \mathvec{x}_i - \mathvec{x}_j \right) \geq 1 - \xi_{ijl} \)
   \item \( \displaystyle \xi_{ijl} \geq 0 \)
