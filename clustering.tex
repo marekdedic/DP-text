@@ -50,7 +50,7 @@ To make this metric computationally less complex, it can be simplified by extrac
 To measure the separation of clusters, the average distance between cluster centres was taken:
 \[ \mathrm{sep} \left( C_1, \dots, C_n \right) = \frac{2}{n \left( n - 1 \right)} \sum_{\substack{i, j \in \hat{n} \\ i < j }} \left\lVert \mu \left( C_i \right) - \mu \left( C_j \right) \right\rVert \]
 
-The final primary metric is akin to a simplified Silhouette coefficient:
-\[ \mathrm{ratio} \left( C_1, \dots, C_n \right) = \frac{\mathrm{sep} \left( C_1, \dots, C_n \right)}{\mathrm{homo} \left( C_1, \dots, C_n \right)} \]
+The final primary metric is akin to the Silhouette coefficient:
+\[ \mathrm{silhouette} \left( C_1, \dots, C_n \right) = \frac{\mathrm{sep} \left( C_1, \dots, C_n \right)}{\mathrm{homo} \left( C_1, \dots, C_n \right)} \]
 
 For the secondary metrics, the kNN algorithm is used and its accuracy (i.e. the fraction of correctly classified samples) measured. The kNN algorithm was seeded with the training data and its accuracy assessed on the testing data. This was done over the learning period, giving the first metric. Secondly, on the final model, the kNN classifier has been seeded with different amount of data and its performance measured (typically, this data is called the training data of the kNN classifier, in this work, however, it is referred to as \name{seed data} to avoid confusion with the data used to train the embedding). This gives a view into the robustness of the clustering, as high-quality embeddings would need only a small amount of seed data points to reach relatively high accuracy. For this last measure, the kNN algorithm was run thrice and the results averaged to compensate for high dependence on the particular seed points chosen if there is only a few of them.

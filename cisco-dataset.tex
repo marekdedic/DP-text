@@ -73,14 +73,14 @@ The data was sampled to include 81\% of legitimate bags and 1\% of every other c
 
 \section{Method comparison}
 
-Figure \ref{fig:cisco-ratio} shows the value of \( \mathrm{ratio} \left( \cdot \right) \) for all the methods over the learning period. Figures \ref{fig:cisco-accuracy} and \ref{fig:cisco-kNN} show the accuracy of a kNN model built on the embedding.
+Figure \ref{fig:cisco-ratio} shows the value of \( \mathrm{silhouette} \left( \cdot \right) \) for all the methods over the learning period. Figures \ref{fig:cisco-accuracy} and \ref{fig:cisco-kNN} show the accuracy of a kNN model built on the embedding.
 
-Figure \ref{fig:cisco-multiclass-ratio} shows the value of \( \mathrm{ratio} \left( \cdot \right) \) for all the methods over the learning period for the 20-class classification problem. Figures \ref{fig:cisco-multiclass-accuracy} and \ref{fig:cisco-multiclass-kNN} show the accuracy of a kNN model built on the embedding. \todo{Add the figures}
+Figure \ref{fig:cisco-multiclass-ratio} shows the value of \( \mathrm{silhouette} \left( \cdot \right) \) for all the methods over the learning period for the 20-class classification problem. Figures \ref{fig:cisco-multiclass-accuracy} and \ref{fig:cisco-multiclass-kNN} show the accuracy of a kNN model built on the embedding. \todo{Add the figures}
 
 \begin{figure}[h]
   \centering
   \includegraphics[width=\textwidth]{images/cisco/ratio/cisco-ratio.pdf}
-  \caption{The value of \( \mathrm{ratio} \left( \cdot \right) \) for magnet loss over the learning period.}\label{fig:cisco-ratio}
+  \caption{The value of \( \mathrm{silhouette} \left( \cdot \right) \) for magnet loss over the learning period.}\label{fig:cisco-ratio}
 \end{figure}
 
 \begin{figure}[h]
@@ -95,4 +95,4 @@ Figure \ref{fig:cisco-multiclass-ratio} shows the value of \( \mathrm{ratio} \le
   \caption{The accuracy of a kNN classifier built on the final embedding for magnet loss as a function of the number of samples used to seed it. Average of three runs.}\label{fig:cisco-kNN}
 \end{figure}
 
-As can be seen from the figures, for this problem, magnet loss performed the best. The model based on contrastive predictive coding is very unstable and while the model based on triplet loss increases its accuracy, the value of \( \mathrm{ratio} \left( \cdot \right) \) actually goes down over the learning period. Figure \ref{fig:cisco-kNN} shows that all of the methods reach their peak performance for a small number of seed data, but all three methods are very sensitive to the choice of the seed data. \todo{Multiclass}
+As can be seen from the figures, for this problem, magnet loss performed the best. The model based on contrastive predictive coding is very unstable and while the model based on triplet loss increases its accuracy, the value of \( \mathrm{silhouette} \left( \cdot \right) \) actually goes down over the learning period. Figure \ref{fig:cisco-kNN} shows that all of the methods reach their peak performance for a small number of seed data, but all three methods are very sensitive to the choice of the seed data. \todo{Multiclass}
