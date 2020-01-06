@@ -4,7 +4,7 @@ The tree methods were finally evaluated on a corporate dataset in the domain of 
 
 \section{The used dataset}
 
-The models were evaluated on a proprietary dataset provided by Cisco Cognitive Intelligence, consisting of records of network connections from clients (e.g. user computers or mobile devices) to some on-line services. The dataset represents HTTP traffic of more than 100 companies. Two datasets were collected, each spanning 1 day of traffic. The training data was traffic from 2019-11-18, while the data used for testing was collected the following day, 2019-11-19. The data was sampled to include 90\% of negative bags and 10\% of positive bags.
+The models were evaluated on a proprietary dataset provided by Cisco Cognitive Intelligence, consisting of records of network connections from clients (e.g. user computers or mobile devices) to some on-line services. The dataset represents HTTP traffic of more than 100 companies. Two datasets were collected, each spanning 1 day of traffic. The training data was traffic from 2019-11-18, while the data used for testing was collected the following day, 2019-11-19. For each connection, a proprietary classification system based on \cite{jusko_graph-based_2017} provided labels, classifying the connections either as legitimate or malicious (connected to malware activity). The data was sampled to include 90\% of negative bags and 10\% of positive bags.
 
 The dataset contained the following information for each connection:
 \begin{enumerate}
@@ -43,9 +43,39 @@ The embedding \( \phi \) was realised by a MIL neural network. Using the notatio
 A mean model and a classification model have been constructed similarily to the ones in section \ref{sec:baseline-models}
 The classification model is identical, with a final output layer of 2 neurons added. ADAM was used as the optimization method optimizing the cross-entropy loss. The accuracy of the model has been evaluated by selecting the optimal threshold on its output.
 
+\section{Multi-class classification}
+Apart from the task of learning a clustering based on a two-class labeling of bags as either legitimate or malicious, a multi-class classification system was also trained and evaluated. In this case, the data points were labeled as belonging to one of the following 20 classes of malware:
+
+\begin{enumerate}
+  \item Legitimate traffic
+  \item Ad injector
+  \item Anonymization software
+  \item Advanced Persistent Threat (APT)
+  \item Banking trojan
+  \item Click fraud
+  \item Cryptocurrency miner
+  \item Data exfiltration
+  \item Exploit kit
+  \item Information stealer
+  \item Malicious advertising
+  \item Malicious content distribution
+  \item Malware distribution
+  \item Money scam
+  \item Potentially unwanted application (PUA)
+  \item Ransomware
+  \item Scareware
+  \item Spam botnet
+  \item Spam tracking
+  \item Trojan
+\end{enumerate}
+
+The data was sampled to include 81\% of legitimate bags and 1\% of every other class.
+
 \section{Method comparison}
 
 Figure \ref{fig:cisco-ratio} shows the value of \( \mathrm{ratio} \left( \cdot \right) \) for all the methods over the learning period. Figures \ref{fig:cisco-accuracy} and \ref{fig:cisco-kNN} show the accuracy of a kNN model built on the embedding.
+
+Figure \ref{fig:cisco-multiclass-ratio} shows the value of \( \mathrm{ratio} \left( \cdot \right) \) for all the methods over the learning period for the 20-class classification problem. Figures \ref{fig:cisco-multiclass-accuracy} and \ref{fig:cisco-multiclass-kNN} show the accuracy of a kNN model built on the embedding. \todo{Add the figures}
 
 \begin{figure}[h]
   \centering
@@ -65,4 +95,4 @@ Figure \ref{fig:cisco-ratio} shows the value of \( \mathrm{ratio} \left( \cdot \
   \caption{The accuracy of a kNN classifier built on the final embedding for magnet loss as a function of the number of samples used to seed it. Average of three runs.}\label{fig:cisco-kNN}
 \end{figure}
 
-As can be seen from the figures, for this problem, magnet loss performed the best. The model based on contrastive predictive coding is very unstable and while the model based on triplet loss increases its accuracy, the value of \( \mathrm{ratio} \left( \cdot \right) \) actually goes down over the learning period. Figure \ref{fig:cisco-kNN} shows that all of the methods reach their peak performance for a small number of seed data, but all three methods are very sensitive to the choice of the seed data.
+As can be seen from the figures, for this problem, magnet loss performed the best. The model based on contrastive predictive coding is very unstable and while the model based on triplet loss increases its accuracy, the value of \( \mathrm{ratio} \left( \cdot \right) \) actually goes down over the learning period. Figure \ref{fig:cisco-kNN} shows that all of the methods reach their peak performance for a small number of seed data, but all three methods are very sensitive to the choice of the seed data. \todo{Multiclass}
