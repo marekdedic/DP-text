@@ -23,7 +23,7 @@ A log-bilinear model was used:
 \[ f_k \left( x_{t + k}, c_t \right) = \exp \left( z_{t + k}^T W_k c_t \right) \]
 
 Both \( g_\mathrm{enc} \) and \( g_\mathrm{ar} \) have been trained to jointly optimize a loss based on the Noise Contrastive Estimation (see \cite{gutmann_noise-contrastive_2010}), which is called \name{InfoNCE} in \cite{oord_representation_2019}. Given a set \( \mathset{X} = \left\{ x_1, \dots, x_N \right\} \) containing one positive sample from \( p \left( x_{t + k} \middle| c_t \right) \) and \( N - 1 \) negative samples from \( p \left( x_{t + k} \right) \), the InfoNCE loss is as follows:
-\[ L_N = - \underset{\mathset{X}}{\mathbb{E}} \left[ \log \frac{f_k \left( x_{t + k}, c_t \right)}{\sum_{x_j \in \mathset{X}} f_k \left( x_j, c_t \right)} \right] \]
+\[ L_N = - \underset{\mathset{X}}{\mathbb{E}} \left[ \log f_k \left( x_{t + k}, c_t \right) - \log \sum_{x_j \in \mathset{X}} f_k \left( x_j, c_t \right) \right] \]
 Optimizing \( L_N \) will result in \( f_k \) estimating the density ratio from equation \ref{equa:CPC-model}.
 
 The model is illustrated in figure \ref{fig:CPC-paper-model}.
@@ -36,13 +36,13 @@ The model is illustrated in figure \ref{fig:CPC-paper-model}.
 
 \subsection{Application to MIL}\label{subsec:CPC-application}
 
-The core idea taken from CPC to this work is that of the InfoNCE loss. The actual application is based on the following idea. If a bag is split into two parts, it is reasonable to expect that the representations of these two parts would be close to one another. On the other hand, if a random bag were to be drawn from the data (as a simple random sample with replacement), it is reasonable to expect it to be relatively far from any actual bag present in the data. Using these assumptions, the following clustering loss is constructed:
-
+The core idea taken from CPC to this work is that of the InfoNCE loss. The actual application is based on the following idea. If a bag is split into two parts, it is reasonable to expect that the representations of these two parts would be close to one another. On the other hand, if a random bag were to be drawn from the data (as a \textit{simple random sample with replacement}), it is reasonable to expect it to be relatively far from any actual bag present in the data. These assumptions can be proven correct by using the stochastic formalism for MIL (see section \ref{sec:stochastic-formalism}). Given that each bag \( B_k \) is viewed as a set of realizations of a probability distribution \( P_k \in \mathcal{P}^\mathspace{X} \), it follows that the two parts of the bag, \( B_k^{(1)} \) and \( B_k^{(2)} \) are sets of realizations from the same distribution \( P_k \) and therefore should be statistically indistinguishable. On the other hand, a randomly sampled bag \( B'_j \) does not share the same probability distribution.
+Using these assumptions, the following clustering loss is constructed:
 
 \[ B_k^{(1)} \oplus B_k^{(2)} = B_k \in \mathspace{B} \]
-\[ B'_j = \mathrm{srswr} \left( \mathspace{X} \right) \]
+\[ \forall j \; B'_j \text{ is a bag of randomly sampled instances from } \mathspace{X} \]
 \[ L_\mathrm{CPC} = \log \left\lVert \phi \left( B_k^{(1)} \right) - \phi \left( B_k^{(2)} \right) \right\rVert^2 - \log \sum_{j = 1}^K \left\lVert \phi \left( B_k^{(1)} \right) - \phi \left( B'_j \right) \right\rVert^2 \]
-where \( \oplus \) is the multiset sum (see definition \ref{def:multiset-sum}). The first term of the loss function depicts the notion that the representations of the two parts of the bag should be close to one another. The second term depicts the notion that a random bag should be far from all the bags\footnote{On the off-chance a random bag would be close to \( B_k^{(1)} \), this would be outweighed by the other terms.}. Choosing to only use the first part of the bag in the second term has no effect as the two parts are chosen randomly. The value \( K \in \mathfield{N} \) is a hyper-parameter of this method.
+where \( \oplus \) is the multiset sum (see definition \ref{def:multiset-sum}). The first term of the loss function depicts the notion that the representations of the two parts of the bag should be close to one another and corresponds to the first term of InfoNCE, which maximizes the prediction of a matching future sample from the current context. The second term depicts the notion that a random bag should be far from all the bags\footnote{On the off-chance a random bag would be close to \( B_k^{(1)} \), this would be outweighed by the other terms.} and corresponds to the second term of InfoNCE, which minimizes the prediction of a random sample from the current context. Choosing to only use the first part of the bag in the second term has no effect as the two parts are chosen randomly. The value \( K \in \mathfield{N} \) is a hyper-parameter of this method.
 
 This method can be further modified to make it less computationally complex. In order to not have to draw a lot of random bags, it can be reasonably expected that, on average, the representations of two parts of two mismatched bags \( B_{k_1}^{(1)} \) and \( B_{k_2}^{(2)} \) should be far apart. The matrix \( \mathmat{D} \) is constructed as
 \[ \mathmat{D}_{ij} = \left\lVert \phi \left( B_i^{(1)} \right) - \phi \left( B_j^{(2)} \right) \right\rVert_2^2 \]
