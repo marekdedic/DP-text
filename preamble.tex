@@ -9,11 +9,6 @@
 
 \makeatletter
 \newcommand{\blx@nowarnpolyglossia}{} % Disable biblatex complaining about polyglossia
-\patchcmd{\@chapter}%
-	{\chaptermark{#1}}%
-	{\chaptermark{#1}%
-	\addtocontents{loa}{\protect\addvspace{10\p@}}}%
-	{}{}%
 \makeatother
 
 \usepackage{polyglossia}
