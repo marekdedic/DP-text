@@ -158,7 +158,22 @@ The magnet loss is then
 \[ L \left( \Theta \right) = \frac{1}{n} \sum_{i = 1}^n \left\{ - \log \frac{\exp \left( - \frac{1}{2 \sigma^2} N_i - \alpha \right)}{M_i} \right\}_+ \]
 where \( \alpha \in \mathfield{R} \) is a hyper-parameter of the method, which has the meaning of the desired cluster separation gap with respect to the variance.
 
-This loss function is made computationally less expensive by only sampling a certain amount of clusters for a class, then sampling a certain amount of inputs in each cluster. The rest of the data then isn't considered.
+This loss function is made computationally less expensive by only sampling a certain amount of clusters for a class, then sampling a certain amount of inputs in each cluster. The rest of the data then isn't considered. This optimization yields the final training procedure:
+
+\begin{enumerate}
+  \item Sample a seed cluster \( I_1 \sim p_I \left( \cdot \right) \).
+  \item Find the \( M - 1 \) nearest \name{impostor clusters} \( I_2, \dots I_M \) for \( I_1 \).
+  \item For each cluster \( I_m \), sample \( D \) examples \( \mathvec{x}_i^m, \dots, \mathvec{x}_D^m \sim p_{I_m} \left( \cdot \right) \).
+\end{enumerate}
+
+A stochastic approximation of the loss function is then constructed as
+\[ \mathvec{r}_d^m = \mathvec{f} \left( \mathvec{x}_d^m; \Theta \right) \]
+\[ \hat{\mathvec{\mu}}_m = \frac{1}{D} \sum_{d = 1}^D \mathvec{r}_d^m \]
+\[ \hat{\mathmat{N}}_{md} = \left\lVert \mathvec{r}_d^m - \hat{\mathvec{\mu}}_m \right\rVert_2^2 \]
+\[ \hat{\sigma}^2 = \frac{1}{MD - 1} \sum_{m = 1}^M \sum_{d = 1}^D \hat{\mathmat{N}}_{md} \]
+\[ \hat{\mathmat{M}}_{md} = \sum_{\substack{\hat{\mathvec{\mu}} \\ C \left( \hat{\mathvec{\mu}} \right) \neq C \left( \mathvec{r}_d^m \right)}} \exp \left( - \frac{1}{2 \hat{\sigma}^2} \left\lVert \mathvec{r}_d^m - \hat{\mathvec{\mu}} \right\rVert_2^2 \right) \]
+\[ L \left( \Theta \right) = \frac{1}{MD} \sum_{m = 1}^M \sum_{d = 1}^D \left\{ - \log \frac{\exp \left( - \frac{1}{2 \hat{\sigma}^2} \hat{\mathmat{N}}_{md} - \alpha \right)}{ \hat{\mathmat{M}}_{md} } \right\}_+ \]
+where \( C \left( \mathvec{r} \right) \) is the class of the representation \( \mathvec{r} \).
 
 The cluster index is refreshed periodically between optimization passes with the frequency of the updates being a hyper-parameter of the method, although \cite{rippel_metric_2015} suggest updating it before each optimization pass.
 
@@ -173,3 +188,5 @@ The magnet loss is taken almost verbatim from the original article. The simplifi
 \[ M_i = \sum_{c \neq y_i} \sum_{k = 1}^K \exp \left( - \frac{1}{2 \sigma^2} \left\lVert \mathvec{r}_i - \mathvec{\mu}_k^c \right\rVert_2^2 \right) \]
 \[ L_\mathrm{magnet} = \frac{1}{n} \sum_{i = 1}^n \left\{ - \log \frac{\exp \left( - \frac{1}{2 \sigma^2} N_i - \alpha \right)}{M_i} \right\}_+ \]
 where \( y_i \) is the class label assigned to the bag \( B_i \) (making magnet loss a supervised method), \( n \) is the number of bags in the dataset and \( K \in \mathfield{N} \) and \( \alpha \in \mathfield{R} \) are hyper-parameters of the method.
+
+The choice of the hyper-parameter \( K \) is non-obvious for most problems. Due to this, alternative methods for obtaining the cluster index which would not need hyper-parameter tuning were explored. One such method, \name{self-tuning spectral clustering} (see \cite{zelnik-manor_self-tuning_2005}) was implemented as a replacement for the K-means algorithm used in the original method. Section \ref{sec:magnet-spectral} presents a comparison of the performance of these two methods.
