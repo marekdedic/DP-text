@@ -1,7 +1,7 @@
 \chapter{Learning a metric for clustering}\label{chap:clustering-metric}
 In section \ref{sec:mil-clustering}, a method for learning a representation \( \phi \) was shown. In order to learn the parameters of the representation, a clustering-loss function is required in the form
 \[ L_C : \mathcal{P}^M \left( \bar{\mathspace{X}} \right) \to \mathfield{R} \]
-In this chapter, three ways of constructing such a clustering-loss function are explored.
+In this chapter, three ways of constructing such a clustering-loss function are explored. The chapter is structured as follows: First, an unsupervised method constructing a clustering loss-function is presented, followed by two supervised methods. Each of the methods builds on some prior art, which is introduced first, followed by an explanation of how the prior art was modified to solve the problem at hand.
 
 \section{Contrastive predictive coding}
 Contrastive predictive coding is a technique first introduced by \cite{oord_representation_2019}. In this section, the original article is first presented, with its application to MIL clustering introduced subsequently.
@@ -190,3 +190,6 @@ The magnet loss is taken almost verbatim from the original article. The simplifi
 where \( y_i \) is the class label assigned to the bag \( B_i \) (making magnet loss a supervised method), \( n \) is the number of bags in the dataset and \( K \in \mathfield{N} \) and \( \alpha \in \mathfield{R} \) are hyper-parameters of the method.
 
 The choice of the hyper-parameter \( K \) is non-obvious for most problems. Due to this, alternative methods for obtaining the cluster index which would not need hyper-parameter tuning were explored. One such method, \name{self-tuning spectral clustering} (see \cite{zelnik-manor_self-tuning_2005}) was implemented as a replacement for the K-means algorithm used in the original method. Section \ref{sec:magnet-spectral} presents a comparison of the performance of these two methods.
+
+\section{A comparison of the methods}\label{sec:clustering-loss-comparison}
+Each of the three methods presented in this chapter is a unique approach to solving the same problem. Out of the three, the approach based on contrastive predictive coding seems the most promising, as it is the only unsupervised method and could therefore be used in a broader class of applications. This, however, also has its drawbacks -- unsupervised methods are generally harder to learn correctly. For that reason, the two supervised methods were selected as a safer option. Comparing them, since magnet loss is an enhancement of triplet loss, it is reasonable to assume it would perform the same or better than triplet loss. One drawback of magnet loss is the higher number of hyper-parameters which need to be tuned in order for the method to work correctly. This problem is partially solved by the introduction of self-tuning spectral clustering. Chapter \ref{chap:toy-dataset} evaluates all of the methods on publicly available datasets and chapter \ref{chap:cisco-dataset} then applies all the methods to a corporate dataset in the domain of network security.
