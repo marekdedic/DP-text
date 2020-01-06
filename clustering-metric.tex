@@ -104,7 +104,7 @@ Next, the pair-wise distance matrix \( \mathmat{D} \) is used, in the same form 
 \[ \mathmat{D}_{ij} = \left\lVert \phi \left( B_i^{(1)} \right) - \phi \left( B_j^{(2)} \right) \right\rVert_2^2 \]
 The loss itself is then expressed as:
 \[ L_\mathrm{triplet} = \sum_{ij} \eta_{ij} D_{ij} + c \sum_{ijl} \eta_{ij} \left( 1 - y_{il} \right) \left\{ D_{il} - D_{ij} \right\}_+ \]
-where \( c > 0 \) is a hyper-parameter of the method. Although \cite{weinberger_distance_2006} suggest finding \( \mathmat{\eta} \) as the \( k \)-nearest neighbours of a data point, in this work, the loss has been simplified by setting \( \mathmat{\eta}_{ij} = \mathmat{y}_{ij} \).\todo{Re-check this with kNN?}
+where \( c > 0 \) is a hyper-parameter of the method. Although \cite{weinberger_distance_2006} suggest finding \( \mathmat{\eta} \) as the \( k \)-nearest neighbours of a data point, in this work, the loss has been simplified by setting \( \mathmat{\eta}_{ij} = \mathmat{y}_{ij} \).
 
 \section{Magnet loss}
 Magnet loss is an enhancement of the previously described triplet loss, first introduced by \cite{rippel_metric_2015}. In this section, the original article is first presented, with its application to MIL clustering introduced subsequently.
