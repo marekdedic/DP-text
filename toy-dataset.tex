@@ -1,6 +1,6 @@
 \chapter{Evaluation on publicly available datasets}\label{chap:toy-dataset}
 
-The three loss functions presented in chapter \ref{chap:clustering-metric} were  experimentally evaluated on publicly available datasets.
+The three loss functions presented in chapter \ref{chap:clustering-metric} were experimentally evaluated on publicly available datasets. This chapter is structured as follows: The datasets and the models are presented, along with all the used configuration options so that the experiments would be independently replicable. Two baseline models are presented as a comparison to the proposed methods. Then, for triplet loss and magnet loss, the hyper-parameters are discussed (that is the parameters to be set by the architect of the model) and optimal values selected by performing a grid-search of the parameter space. Finally, all the methods are compared using their optimal configuration. When comparing the methods, it is important not only to look at the performance metrics at the end of the training phase, but to actually observe their development during the whole training process. It would make no sense to select a method which has a better initial performance, but isn't affected by the learning process. Also note that in all comparisons, both the value of \( \mathrm{silhouette} \left( \cdot right) \) and the accuracy of a kNN classifier built on the embedding are taken into consideration as they may or may not follow each other.
 
 \section{Used datasets}
 
