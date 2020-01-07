@@ -6,7 +6,7 @@ The tree methods were finally evaluated on a corporate dataset in the domain of 
 
 The models were evaluated on a proprietary dataset provided by Cisco Cognitive Intelligence, consisting of records of network connections from clients (e.g. user computers or mobile devices) to some on-line services. The dataset represents HTTP traffic of more than 100 companies. Two datasets were collected, each spanning 1 day of traffic. The training data was traffic from 2019-11-18, while the data used for testing was collected the following day, 2019-11-19. For each connection, a proprietary classification system based on \cite{jusko_graph-based_2017} provided labels, classifying the connections either as legitimate or malicious (connected to malware activity). The data was sampled to include 90\% of negative bags and 10\% of positive bags. Table \ref{tab:cisco-features} lists all the features provided in the dataset for each connection.
 
-\begin{table}{h}
+\begin{table}
   \centering
   \begin{tabular}{l}
     \toprule
@@ -51,7 +51,7 @@ The classification model is identical, with a final output layer of 2 neurons ad
 \section{Multi-class classification}
 Apart from the task of learning a clustering based on a two-class labeling of bags as either legitimate or malicious, a multi-class classification system was also trained and evaluated. In this case, the data points were labeled as either legitimate or belonging to one of 19 classes of malware, described in table \ref{tab:cisco-malware-classes}.
 
-\begin{table}{h}
+\begin{table}
   \centering
   \begin{tabular}{l}
     \toprule
