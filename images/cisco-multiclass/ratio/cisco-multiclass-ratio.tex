@@ -1,0 +1,174 @@
+\RequirePackage{luatex85}
+\documentclass[tikz]{standalone}
+
+\usepackage{polyglossia}
+\usepackage{fontspec}
+\usepackage{csquotes}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.15}
+
+\setdefaultlanguage{english}
+\setmainfont{TeX Gyre Termes}
+
+\begin{document}
+
+\begin{tikzpicture}[]
+\begin{axis}[height = {101.6mm}, legend pos = {north west}, ylabel = {Ratio}, xmin = {0.43000000000000005}, xmax = {20.57}, ymax = {1.2313968420028687}, xlabel = {Learning step}, unbounded coords=jump,scaled x ticks = false,xlabel style = {font = {\fontsize{11 pt}{14.3 pt}\selectfont}, color = {rgb,1:red,0.00000000;green,0.00000000;blue,0.00000000}, draw opacity = 1.0, rotate = 0.0},xmajorgrids = true,xtick = {5.0,10.0,15.0,20.0},xticklabels = {$5$,$10$,$15$,$20$},xtick align = inside,xticklabel style = {font = {\fontsize{8 pt}{10.4 pt}\selectfont}, color = {rgb,1:red,0.00000000;green,0.00000000;blue,0.00000000}, draw opacity = 1.0, rotate = 0.0},x grid style = {color = {rgb,1:red,0.00000000;green,0.00000000;blue,0.00000000},
+draw opacity = 0.1,
+line width = 0.5,
+solid},axis x line* = left,x axis line style = {color = {rgb,1:red,0.00000000;green,0.00000000;blue,0.00000000},
+draw opacity = 1.0,
+line width = 1,
+solid},scaled y ticks = false,ylabel style = {font = {\fontsize{11 pt}{14.3 pt}\selectfont}, color = {rgb,1:red,0.00000000;green,0.00000000;blue,0.00000000}, draw opacity = 1.0, rotate = 0.0},ymajorgrids = true,ytick = {1.08,1.1,1.12,1.14,1.16,1.18,1.2,1.22},yticklabels = {$1.08$,$1.10$,$1.12$,$1.14$,$1.16$,$1.18$,$1.20$,$1.22$},ytick align = inside,yticklabel style = {font = {\fontsize{8 pt}{10.4 pt}\selectfont}, color = {rgb,1:red,0.00000000;green,0.00000000;blue,0.00000000}, draw opacity = 1.0, rotate = 0.0},y grid style = {color = {rgb,1:red,0.00000000;green,0.00000000;blue,0.00000000},
+draw opacity = 0.1,
+line width = 0.5,
+solid},axis y line* = left,y axis line style = {color = {rgb,1:red,0.00000000;green,0.00000000;blue,0.00000000},
+draw opacity = 1.0,
+line width = 1,
+solid},    xshift = 0.0mm,
+    yshift = 0.0mm,
+    axis background/.style={fill={rgb,1:red,1.00000000;green,1.00000000;blue,1.00000000}}
+,legend style = {color = {rgb,1:red,0.00000000;green,0.00000000;blue,0.00000000},
+draw opacity = 1.0,
+line width = 1,
+solid,fill = {rgb,1:red,1.00000000;green,1.00000000;blue,1.00000000},fill opacity = 1.0,text opacity = 1.0,font = {\fontsize{8 pt}{10.4 pt}\selectfont}},colorbar style={title=}, ymin = {1.0634012937545776}, width = {152.4mm}]\addplot+ [color = {rgb,1:red,0.00000000;green,0.60560316;blue,0.97868012},
+draw opacity = 1.0,
+line width = 1,
+solid,mark = none,
+mark size = 2.0,
+mark options = {
+            color = {rgb,1:red,0.00000000;green,0.00000000;blue,0.00000000}, draw opacity = 1.0,
+            fill = {rgb,1:red,0.00000000;green,0.60560316;blue,0.97868012}, fill opacity = 1.0,
+            line width = 1,
+            rotate = 0,
+            solid
+        }]coordinates {
+(1.0, 1.1974676)
+(2.0, 1.2017168)
+(3.0, 1.2050899)
+(4.0, 1.2083552)
+(5.0, 1.21096)
+(6.0, 1.2140044)
+(7.0, 1.2161554)
+(8.0, 1.2178103)
+(9.0, 1.219533)
+(10.0, 1.2205917)
+(11.0, 1.2211947)
+(12.0, 1.2214082)
+(13.0, 1.2217108)
+(14.0, 1.2223047)
+(15.0, 1.2234029)
+(16.0, 1.2237334)
+(17.0, 1.2248098)
+(18.0, 1.2252249)
+(19.0, 1.225818)
+(20.0, 1.2266423)
+};
+\addlegendentry{CPC}
+\addplot+ [color = {rgb,1:red,0.88887350;green,0.43564919;blue,0.27812294},
+draw opacity = 1.0,
+line width = 1,
+solid,mark = none,
+mark size = 2.0,
+mark options = {
+            color = {rgb,1:red,0.00000000;green,0.00000000;blue,0.00000000}, draw opacity = 1.0,
+            fill = {rgb,1:red,0.88887350;green,0.43564919;blue,0.27812294}, fill opacity = 1.0,
+            line width = 1,
+            rotate = 0,
+            solid
+        }]coordinates {
+(1.0, 1.1819303)
+(2.0, 1.1735903)
+(3.0, 1.1665453)
+(4.0, 1.1601902)
+(5.0, 1.1545974)
+(6.0, 1.1494526)
+(7.0, 1.1453304)
+(8.0, 1.1407099)
+(9.0, 1.135595)
+(10.0, 1.1294094)
+(11.0, 1.1238695)
+(12.0, 1.1168857)
+(13.0, 1.1099199)
+(14.0, 1.1038554)
+(15.0, 1.0982405)
+(16.0, 1.0924321)
+(17.0, 1.0860957)
+(18.0, 1.0795666)
+(19.0, 1.0734371)
+(20.0, 1.0681559)
+};
+\addlegendentry{Triplet loss}
+\addplot+ [color = {rgb,1:red,0.24222430;green,0.64327509;blue,0.30444865},
+draw opacity = 1.0,
+line width = 1,
+solid,mark = none,
+mark size = 2.0,
+mark options = {
+            color = {rgb,1:red,0.00000000;green,0.00000000;blue,0.00000000}, draw opacity = 1.0,
+            fill = {rgb,1:red,0.24222430;green,0.64327509;blue,0.30444865}, fill opacity = 1.0,
+            line width = 1,
+            rotate = 0,
+            solid
+        }]coordinates {
+(1.0, 1.1560355)
+(2.0, 1.1460599)
+(3.0, 1.1418935)
+(4.0, 1.140472)
+(5.0, 1.1419816)
+(6.0, 1.145212)
+(7.0, 1.1502237)
+(8.0, 1.1574098)
+(9.0, 1.1657197)
+(10.0, 1.1735966)
+(11.0, 1.180761)
+(12.0, 1.187342)
+(13.0, 1.1935353)
+(14.0, 1.1988431)
+(15.0, 1.2033613)
+(16.0, 1.2085525)
+(17.0, 1.2128954)
+(18.0, 1.2166048)
+(19.0, 1.2197754)
+(20.0, 1.2224892)
+};
+\addlegendentry{Magnet loss}
+\addplot+ [color = {rgb,1:red,0.76444018;green,0.44411178;blue,0.82429754},
+draw opacity = 1.0,
+line width = 1,
+dashed,mark = none,
+mark size = 2.0,
+mark options = {
+            color = {rgb,1:red,0.00000000;green,0.00000000;blue,0.00000000}, draw opacity = 1.0,
+            fill = {rgb,1:red,0.76444018;green,0.44411178;blue,0.82429754}, fill opacity = 1.0,
+            line width = 1,
+            rotate = 0,
+            solid
+        }]coordinates {
+(1.0, 1.2239506)
+(2.0, 1.2239506)
+(3.0, 1.2239506)
+(4.0, 1.2239506)
+(5.0, 1.2239506)
+(6.0, 1.2239506)
+(7.0, 1.2239506)
+(8.0, 1.2239506)
+(9.0, 1.2239506)
+(10.0, 1.2239506)
+(11.0, 1.2239506)
+(12.0, 1.2239506)
+(13.0, 1.2239506)
+(14.0, 1.2239506)
+(15.0, 1.2239506)
+(16.0, 1.2239506)
+(17.0, 1.2239506)
+(18.0, 1.2239506)
+(19.0, 1.2239506)
+(20.0, 1.2239506)
+};
+\addlegendentry{Mean model}
+\end{axis}
+
+\end{tikzpicture}
+
+\end{document}
