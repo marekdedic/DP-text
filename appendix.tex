@@ -1,5 +1,8 @@
-\chapter*{Appendix}
-\addcontentsline{toc}{chapter}{Appendix}
+\renewcommand{\chaptername}{Appendix}
+\setcounter{chapter}{0}% Equivalent to "letter O"
+\renewcommand{\thechapter}{\Alph{chapter}}
+
+\chapter{Plots}
 
 \begin{figure}[h]
   \centering
@@ -71,5 +74,5 @@
 \begin{figure}[h]
   \centering
   \includegraphics[width=\textwidth]{images/cisco/kNN/cisco-kNN.pdf}
-  \caption{The accuracy of a kNN classifier built on the final embedding as a function of the number of samples used to seed it. Average of three runs.}\label{fig:cisco-kNN}
+  \caption{The accuracy of a kNN classifier built on the final embedding as a function of the number of samples used to seed it. Average of three runs on the corporate dataset.}\label{fig:cisco-kNN}
 \end{figure}
