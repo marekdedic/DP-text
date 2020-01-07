@@ -1,6 +1,6 @@
 \chapter{Evaluation on publicly available datasets}\label{chap:toy-dataset}
 
-The three loss functions presented in chapter \ref{chap:clustering-metric} were experimentally evaluated on publicly available datasets. This chapter is structured as follows: The datasets and the models are presented, along with all the used configuration options so that the experiments would be independently replicable. Two baseline models are presented as a comparison to the proposed methods. Then, for triplet loss and magnet loss, the hyper-parameters are discussed (that is the parameters to be set by the architect of the model) and optimal values selected by performing a grid-search of the parameter space. Finally, all the methods are compared using their optimal configuration. When comparing the methods, it is important not only to look at the performance metrics at the end of the training phase, but to actually observe their development during the whole training process. It would make no sense to select a method which has a better initial performance, but isn't affected by the learning process. Also note that in all comparisons, both the value of \( \mathrm{silhouette} \left( \cdot right) \) and the accuracy of a kNN classifier built on the embedding are taken into consideration as they may or may not follow each other.
+The three loss functions presented in chapter \ref{chap:clustering-metric} were experimentally evaluated on publicly available datasets. This chapter is structured as follows: The datasets and the models are presented, along with all the used configuration options so that the experiments would be independently replicable. Two baseline models are presented as a comparison to the proposed methods. Then, for triplet loss and magnet loss, the hyper-parameters are discussed (that is the parameters to be set by the architect of the model) and optimal values selected by performing a grid-search of the parameter space. Finally, all the methods are compared using their optimal configuration. When comparing the methods, it is important not only to look at the performance metrics at the end of the training phase, but to actually observe their development during the whole training process. It would make no sense to select a method which has a better initial performance, but isn't affected by the learning process. Also note that in all comparisons, both the value of \( \mathrm{silhouette} \left( \cdot \right) \) and the accuracy of a kNN classifier built on the embedding are taken into consideration as they may or may not follow each other.
 
 \section{Used datasets}
 
@@ -31,57 +31,55 @@ For each of the datasets, 80\% of bags was randomly chosen as the training data,
 
 In order to provide some baseline against which the models could be compared (as there is no prior art for this problem), two other models were introduced.
 
-A non-machine-learning model was introduced as a baseline, which all models should surpass. This model implements the embedding \( \phi \) as an element-wise mean of all instances of a bag.
+A non-machine-learning model was introduced as a baseline, which all models should surpass. This model implements the embedding \( \phi \) as an element-wise mean of all instances of a bag. This model is reffered to as the \name{mean model} in the rest of this work.
 
-A classification model has been introduced as a target to beat. This model was realised by a MIL neural network consisting of 2 per-instance layers of 30 neurons, followed by aggregation formed by concatenating element-wise mean and element-wise maximum of all instances in a bag, followed by 2 per-bag layers of 30 neurons and a final layer of 2 output neurons. All the neurons used the ReLU activation function, except for the output neurons which used identity as their activation function. Layer weights were initialized using Glorot initialization, bias vectors were initialized to zeros. ADAM was used as the optimization method optimizing the cross-entropy loss. The accuracy of the model has been evaluated by selecting the optimal threshold on its output.
+A classification model has been introduced as a target to beat. This model was realised by a MIL neural network consisting of 2 per-instance layers of 30 neurons, followed by aggregation formed by concatenating element-wise mean and element-wise maximum of all instances in a bag, followed by 2 per-bag layers of 30 neurons and a final layer of 2 output neurons. All the neurons used the ReLU activation function, except for the output neurons which used identity as their activation function. Layer weights were initialized using Glorot initialization, bias vectors were initialized to zeros. ADAM was used as the optimization method optimizing the cross-entropy loss. The accuracy of the model has been evaluated by selecting the optimal threshold on its output. This model is reffered to as the \name{classification model} in the rest of this work.
 
 \section{Method hyper-parameter selection}
 
-Some of the three proposed clustering-losses have some hyper-parameters which need to be tuned, that is values that need to be chosen by the model architect as part of the design of the method. \( L_\mathrm{CPC} \) has no hyper-parameters, \( L_\mathrm{triplet} \) has a single hyper-parameter \( c \), and \( L_\mathrm{magnet} \) has three hyper-parameters, \( K \), \( \alpha \) and the cluster index update frequency. For \( L_\mathrm{triplet} \) and \( L_\mathrm{magnet} \), a range of values was tried for each hyper-parameter in order to select the best configuration for each. The testing was done on the "Musk2" dataset, as it is sufficiently hard and simultaneously the best-known industry standard dataset for MIL.
+Some of the three proposed clustering-losses have some hyper-parameters which need to be tuned, that is values that need to be chosen by the model architect as part of the design of the method. \( L_\mathrm{CPC} \) has no hyper-parameters, \( L_\mathrm{triplet} \) has a single hyper-parameter \( c \) which controls the weght on the term separating clusters, and \( L_\mathrm{magnet} \) has three hyper-parameters, \( K \), which is the number of clusters fora each class, \( \alpha \), which is the desired separation between clusters, and the cluster index update frequency. For \( L_\mathrm{triplet} \) and \( L_\mathrm{magnet} \), a range of values was tried for each hyper-parameter in order to select the best configuration for each. The testing was done on the "Musk2" dataset, as it is sufficiently hard and simultaneously the best-known industry standard dataset for MIL.
 
 \subsection{Triplet loss}
-For \( L_\mathrm{triplet} \), the values \( c \in \left\{ 0.01, 0.1, 1, 10, 100 \right\} \) have been tested. Figure \ref{fig:triplet-gridsearch-ratio} shows the values of \( \mathrm{silhouette} \left( \cdot \right) \) (i.e. the ratio between the average inter-cluster distance and the average intra-cluster distance, see section \ref{sec:clustering-metrics} for the exact definition) for the different hyper-parameter values, figure \ref{fig:triplet-gridsearch-accuracy} shows the accuracy of a kNN classifier built on the embedding.
+For \( L_\mathrm{triplet} \), the values \( c \in \left\{ 0.01, 0.1, 1, 10, 100 \right\} \) have been tested. Figure \ref{fig:triplet-gridsearch} shows the values of \( \mathrm{silhouette} \left( \cdot \right) \) (i.e. the ratio between the average inter-cluster distance and the average intra-cluster distance, see section \ref{sec:clustering-metrics} for the exact definition) and the accuracy of a kNN classifier built on the embedding for the different hyper-parameter values.
 
 \begin{figure}[h]
   \centering
-  \includegraphics[width=\textwidth]{images/triplet-gridsearch/ratio/triplet-gridsearch-ratio.pdf}
-  \caption{The value of \( \mathrm{silhouette} \left( \cdot \right) \) over the learning period for triplet loss.}\label{fig:triplet-gridsearch-ratio}
-\end{figure}
-
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=\textwidth]{images/triplet-gridsearch/accuracy/triplet-gridsearch-accuracy.pdf}
-  \caption{The accuracy of a kNN classifier built on the embedding over the learning period for triplet loss.}\label{fig:triplet-gridsearch-accuracy}
+  \begin{subfigure}[t]{0.49\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{images/triplet-gridsearch/ratio/triplet-gridsearch-ratio.pdf}
+    \caption{The value of \( \mathrm{silhouette} \left( \cdot \right) \).}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[t]{0.49\textwidth}
+    \centering
+    \includegraphics[width=\textwidth]{images/triplet-gridsearch/accuracy/triplet-gridsearch-accuracy.pdf}
+    \caption{The accuracy of a kNN classifier built on the embedding.}
+  \end{subfigure}
+  \caption{The values of the performance metrics over the learning period for triplet loss.}\label{fig:triplet-gridsearch}
 \end{figure}
 
 As can be seen from the figures, for low values of \( c \), the performance is not good and, more importantly, isn't increasing over the learning period. In the end, the value \( c = 1 \) has been selected as it offers good performance and the higher values show some instability in the learning process.
 
 \subsection{Magnet loss}
-For \( L_\mathrm{magnet} \), the values \( K \in \left\{ 2, 3, 5, 8, 16, 20 \right\} \), \( \alpha \in \left\{ 0, 0.1, 0.5, 1, 10 \right\} \) and the cluster index update frequency in \( \left\{ 5, 10, 25, 70, 130, 200, 1000 \right\} \) have been tested. Figure \ref{fig:magnet-gridsearch-ratio} shows the values of \( \mathrm{silhouette} \left( \cdot \right) \) for the different hyper-parameter values, figure \ref{fig:magnet-gridsearch-accuracy} shows the accuracy of a kNN classifier built on the embedding.
+For \( L_\mathrm{magnet} \), the values \( K \in \left\{ 2, 3, 5, 8, 16, 20 \right\} \), \( \alpha \in \left\{ 0, 0.1, 0.5, 1, 10 \right\} \) and the cluster index update frequency in \( \left\{ 5, 10, 25, 70, 130, 200, 1000 \right\} \) have been tested. Figure \ref{fig:magnet-gridsearch-ratio} shows the values of \( \mathrm{silhouette} \left( \cdot \right) \) for the different hyper-parameter values. The accuracy of the kNN classsifier built on top of the embedding was also calculated and is included in the appendix.
 
-\begin{figure}[h]
+\begin{figure}[H]
   \centering
   \includegraphics[width=0.93\textwidth]{images/magnet-gridsearch/ratio/K/magnet-gridsearch-ratio-K.pdf}
   \caption{The value of \( \mathrm{silhouette} \left( \cdot \right) \) over the learning period for different values of \( K \), \( \alpha \) and the cluster index update frequency. Each subplot corresponds to a particular \( \alpha \) and the cluster index update frequency. The series in each subplot correspond to a value of \( K \).}\label{fig:magnet-gridsearch-ratio}
-\end{figure}
-
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=0.93\textwidth]{images/magnet-gridsearch/accuracy/K/magnet-gridsearch-accuracy-K.pdf}
-  \caption{The accuracy of a kNN classifier built on the embedding over the learning period for different values of \( K \), \( \alpha \) and the cluster index update frequency. Each subplot corresponds to a particular \( \alpha \) and the cluster index update frequency. The series in each subplot correspond to a value of \( K \).}\label{fig:magnet-gridsearch-accuracy}
 \end{figure}
 
 As can be seen from the figures, the value of \( K \) doesn't affect the performance, therefore \( K = 2 \) was chosen due to its lowest computational complexity. For the values of \( \alpha \), the lower values offer better performance, with the values \( 0 \) and \( 0.1 \) being practically indistinguishable. Therefore \( \alpha = 0 \) was chosen. The cluster index update frequency offers no practical change in performance for values up to \( 25 \), with higher values having a negative impact. Therefore, due to computational constraints, the value of \( 25 \) was chosen. The selected hyper-parameter configuration is compared to the mean model and the classification model on the "Musk2" dataset in figure \ref{fig:magnet-baseline}.
 
 \begin{figure}[h]
   \centering
-  \begin{subfigure}[b]{0.49\textwidth}
+  \begin{subfigure}[t]{0.49\textwidth}
     \centering
     \includegraphics[width=\textwidth]{images/magnet-baseline/ratio/magnet-baseline-ratio.pdf}
     \caption{The value of \( \mathrm{silhouette} \left( \cdot \right) \) over the learning period.}
   \end{subfigure}
   \hfill
-  \begin{subfigure}[b]{0.49\textwidth}
+  \begin{subfigure}[t]{0.49\textwidth}
     \centering
     \includegraphics[width=\textwidth]{images/magnet-baseline/accuracy/magnet-baseline-accuracy.pdf}
     \caption{The accuracy of a kNN classifier built on the embedding over the learning period.}
@@ -90,77 +88,48 @@ As can be seen from the figures, the value of \( K \) doesn't affect the perform
 \end{figure}
 
 \section{Method comparison}
-The three methods were compared using their best hyper-parameter configuration. All of the methods were evaluated on all of the datasets.
+The three methods were compared using their best hyper-parameter configuration. All of the methods were evaluated on all of the datasets, however, for better legibility, only the datasets "BrownCreeper", "Musk2", "Mutagenesis2" and "Web3" have been selected for the comparison as they contain a mixture of the most well-known, easy, hard and different domains. The rest of the figures, detailing the values of \( \mathrm{silhouette} \left( \cdot \right) \) and the accuracy of a kNN classifier based on the embedding as both a function of the learning step and as a function of the size of the seed dataset are presented in the appendix.
 
-Figure \ref{fig:CPC-toy-ratio} shows the value of \( \mathrm{silhouette} \left( \cdot \right) \) for \( L_\mathrm{CPC} \) over the learning period. Figures \ref{fig:CPC-toy-accuracy} and \ref{fig:CPC-toy-kNN} show the accuracy of a kNN model built on the embedding.
+Figure \ref{fig:toy-ratio} shows the value of \( \mathrm{silhouette} \left( \cdot \right) \) for the three methods, as evaluated on the 4 selected datasets. Table \ref{tab:toy-accuracy} shows the accuracy of the final model for each method and each dataset.
 
-\begin{figure}[h]
+\begin{figure}[H]
   \centering
-  \includegraphics[width=\textwidth]{images/CPC-toy/ratio/CPC-toy-ratio.pdf}
-  \caption{The value of \( \mathrm{silhouette} \left( \cdot \right) \) for \( L_\mathrm{CPC} \) over the learning period.}\label{fig:CPC-toy-ratio}
+  \includegraphics[width=\textwidth]{images/toy-ratio/toy-ratio.pdf}
+  \caption{The value of \( \mathrm{silhouette} \left( \cdot \right) \) for the three methods over the learning period.}\label{fig:toy-ratio}
 \end{figure}
 
-\begin{figure}[h]
+\begin{table}[h!]
   \centering
-  \begin{subfigure}[b]{0.49\textwidth}
-    \centering
-    \includegraphics[width=\textwidth]{images/CPC-toy/accuracy1/CPC-toy-accuracy1.pdf}
-  \end{subfigure}
-  \hfill
-  \begin{subfigure}[b]{0.49\textwidth}
-    \centering
-    \includegraphics[width=\textwidth]{images/CPC-toy/accuracy2/CPC-toy-accuracy2.pdf}
-  \end{subfigure}
-  \caption{The accuracy of a kNN classifier built on the embedding for \( L_\mathrm{CPC} \) over the learning period.}\label{fig:CPC-toy-accuracy}
-\end{figure}
+  \begin{tabular}{lrrr}
+    \toprule
+    Dataset          & CPC            & Triplet loss   & Magnet loss \\
+    \midrule
+    BrownCreeper     & \textbf{0.900} & 0.836          & 0.818 \\
+    CorelAfrican     & \textbf{0.950} & 0.945          & 0.945 \\
+    CorelBeach       & 0.965          & \textbf{0.975} & 0.970 \\
+    Elephant         & 0.575          & \textbf{0.875} & 0.825 \\
+    Fox              & 0.400          & \textbf{0.625} & 0.550 \\
+    Musk1            & 0.667          & \textbf{0.722} & 0.667 \\
+    Musk2            & 0.750          & \textbf{1.0}   & 0.650 \\
+    Mutagenesis1     & 0.658          & \textbf{0.816} & 0.789 \\
+    Mutagenesis2     & 0.708          & \textbf{0.750} & 0.500 \\
+    Newsgroups1      & 0.533          & \textbf{0.900} & \textbf{0.900} \\
+    Newsgroups2      & 0.600          & 0.750          & \textbf{0.850} \\
+    Newsgroups3      & 0.683          & 0.650          & \textbf{0.700} \\
+    Protein          & 0.820          & \textbf{0.846} & 0.821 \\
+    Tiger            & 0.642          & \textbf{0.900} & 0.575 \\
+    UCSBBreastCancer & 0.333          & \textbf{0.750} & 0.583 \\
+    Web1             & 0.667          & \textbf{0.733} & 0.667 \\
+    Web2             & 0.689          & \textbf{0.733} & 0.600 \\
+    Web3             & 0.733          & \textbf{0.867} & 0.533 \\
+    Web4             & 0.622          & 0.600          & \textbf{0.667} \\
+    WinterWren       & \textbf{0.936} & \textbf{0.936} & 0.927 \\
+    \bottomrule
+  \end{tabular}
+  \caption{The accuracy of the final models.}\label{tab:toy-accuracy}
+\end{table}
 
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=\textwidth]{images/CPC-toy/kNN/CPC-toy-kNN.pdf}
-  \caption{The accuracy of a kNN classifier built on the final embedding for \( L_\mathrm{CPC} \) as a function of the number of samples used to seed it. Average of three runs.}\label{fig:CPC-toy-kNN}
-\end{figure}
-
-Figure \ref{fig:triplet-toy-ratio} shows the value of \( \mathrm{silhouette} \left( \cdot \right) \) for triplet loss over the learning period. Figures \ref{fig:triplet-toy-accuracy} and \ref{fig:triplet-toy-kNN} show the accuracy of a kNN model built on the embedding.
-
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=\textwidth]{images/triplet-toy/ratio/triplet-toy-ratio.pdf}
-  \caption{The value of \( \mathrm{silhouette} \left( \cdot \right) \) for triplet loss over the learning period. Note the logarithmic scale on the \( y \) axis.}\label{fig:triplet-toy-ratio}
-\end{figure}
-
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=\textwidth]{images/triplet-toy/accuracy/triplet-toy-accuracy.pdf}
-  \caption{The accuracy of a kNN classifier built on the embedding for triplet loss over the learning period.}\label{fig:triplet-toy-accuracy}
-\end{figure}
-
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=\textwidth]{images/triplet-toy/kNN/triplet-toy-kNN.pdf}
-  \caption{The accuracy of a kNN classifier built on the final embedding for triplet loss as a function of the number of samples used to seed it. Average of three runs.}\label{fig:triplet-toy-kNN}
-\end{figure}
-
-Figure \ref{fig:magnet-toy-ratio} shows the value of \( \mathrm{silhouette} \left( \cdot \right) \) for magnet loss over the learning period. Figures \ref{fig:magnet-toy-accuracy} and \ref{fig:magnet-toy-kNN} show the accuracy of a kNN model built on the embedding.
-
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=\textwidth]{images/magnet-toy/ratio/magnet-toy-ratio.pdf}
-  \caption{The value of \( \mathrm{silhouette} \left( \cdot \right) \) for magnet loss over the learning period. Note the logarithmic scale on the \( y \) axis.}\label{fig:magnet-toy-ratio}
-\end{figure}
-
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=\textwidth]{images/magnet-toy/accuracy/magnet-toy-accuracy.pdf}
-  \caption{The accuracy of a kNN classifier built on the embedding for magnet loss over the learning period.}\label{fig:magnet-toy-accuracy}
-\end{figure}
-
-\begin{figure}[h]
-  \centering
-  \includegraphics[width=\textwidth]{images/magnet-toy/kNN/magnet-toy-kNN.pdf}
-  \caption{The accuracy of a kNN classifier built on the final embedding for magnet loss as a function of the number of samples used to seed it. Average of three runs.}\label{fig:magnet-toy-kNN}
-\end{figure}
-
-As can be seen from the figures, triplet loss is the clear winner among these 3 approaches as it is the only one which improves the metrics over the learning period. The other two methods show no clear improvement. With that said, however, the performance varies wildly between datasets. On the "Web" datasets, the value of \( \mathrm{silhouette} \left( \cdot \right) \) quickly increases, but the accuracy of the kNN classifier remains fairly constant. This suggests that the embedding is quickly separating the different classes, but it does so in such a way that the kNN algorithm is not able to utilize this separation. This suggests that kNN might not be the right classification algorithm for this application.
+As can be seen from the figure and the table, triplet loss is the best performing among these 3 approaches as it is the only one which improves the metrics over the learning period (with the exception of the "BrownCreeper" dataset). The other two methods show no clear improvement. With that said, however, the performance varies wildly between datasets. On the "Web" datasets, the value of \( \mathrm{silhouette} \left( \cdot \right) \) quickly increases to vera high values, but the accuracy of the kNN classifier isn't accordingly high. This suggests that the embedding is quickly separating the different classes, but it does so in such a way that the kNN algorithm is not able to utilize this separation. This suggests that kNN might not be the right classification algorithm for this application.
 
 Looking at the dependency of the accuracy on the size of the kNN seed data, some datasets clearly stand out as particularly hard for all of the methods (e.g. "Mutagenesis2"), while other have good results for all methods (e.g. "BrownCreeper"). Again, triplet loss is the clear winner as on most datasets it reaches its peak performance only with small amount of seed data.
 
@@ -172,13 +141,13 @@ Figure \ref{fig:magnet-spectral} presents the difference between using K-means a
 
 \begin{figure}[h]
   \centering
-  \begin{subfigure}[b]{0.49\textwidth}
+  \begin{subfigure}[t]{0.49\textwidth}
     \centering
     \includegraphics[width=\textwidth]{images/magnet-spectral/ratio/magnet-spectral-ratio.pdf}
     \caption{The value of \( \mathrm{silhouette} \left( \cdot \right) \) over the learning period.}
   \end{subfigure}
   \hfill
-  \begin{subfigure}[b]{0.49\textwidth}
+  \begin{subfigure}[t]{0.49\textwidth}
     \centering
     \includegraphics[width=\textwidth]{images/magnet-spectral/accuracy/magnet-spectral-accuracy.pdf}
     \caption{The accuracy of a kNN classifier built on the embedding over the learning period.}
