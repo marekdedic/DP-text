@@ -126,7 +126,7 @@ Figure \ref{fig:toy-ratio} shows the value of \( \mathrm{silhouette} \left( \cdo
     WinterWren       & \textbf{0.936} & \textbf{0.936} & 0.927 \\
     \bottomrule
   \end{tabular}
-  \caption{The accuracy of the final models.}\label{tab:toy-accuracy}
+  \caption{The accuracy of the final models for the publicly available datasets.}\label{tab:toy-accuracy}
 \end{table}
 
 As can be seen from the figure and the table, triplet loss is the best performing among these 3 approaches as it is the only one which improves the metrics over the learning period (with the exception of the "BrownCreeper" dataset). The other two methods show no clear improvement. With that said, however, the performance varies wildly between datasets. On the "Web" datasets, the value of \( \mathrm{silhouette} \left( \cdot \right) \) quickly increases to vera high values, but the accuracy of the kNN classifier isn't accordingly high. This suggests that the embedding is quickly separating the different classes, but it does so in such a way that the kNN algorithm is not able to utilize this separation. This suggests that kNN might not be the right classification algorithm for this application.
